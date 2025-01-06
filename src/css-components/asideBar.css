@@ -1,0 +1,143 @@
+.aside-bar {
+  grid-column: 1/2;
+  height: 100%;
+  width: 295px;
+  background: var(--asideBgColor);
+  display: grid;
+  grid-template-rows: 50fr 50fr;
+}
+
+.aside-container {
+  width: 100%;
+  max-height: 1050px;
+  background: transparent;
+}
+
+.yet-to-read-container,
+.done-reading-container {
+  max-height: 456.5px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  line-height: 36px;
+  margin-bottom: 120px;
+}
+.yet-to-read-container {
+  padding-top: 20px;
+  border-top: 0.1px solid var(--asideSplitColor);
+}
+.done-reading-container {
+  grid-row: 1/2;
+}
+.yet-to-read-container {
+  grid-row: 2/3;
+}
+
+.done-reading-box,
+.yet-to-read-box {
+  width: 100%;
+  height: 500px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.done-reading-heading,
+.yet-to-read-heading {
+  text-align: center;
+  font-size: 1.7rem;
+  margin: 20px 0;
+  line-height: 36px;
+}
+
+.book-name-anchor {
+  text-decoration: none;
+  height: fit-content;
+  width: fit-content;
+  color: var(--asideTextColor);
+  font-size: 1rem;
+  font-weight: 600;
+  list-style: disc;
+  letter-spacing: 3.5px;
+  text-align: center;
+}
+
+.book-name-anchor::before {
+  content: "• ";
+  color: var(--asideDotColor);
+  font-size: 1.5rem;
+}
+
+.small--screen-aside-Btn {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .aside-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 100px;
+    margin-top: 70px;
+    font-size: 2rem;
+    background: var(--asideBgColor);
+  }
+
+  .yet-to-read-container,
+  .done-reading-container {
+    width: 80%;
+    background: var(--asideBgColor);
+  }
+
+  .small--screen-aside-Btn {
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background: transparent;
+    height: min-content;
+    width: min-content;
+    z-index: 400;
+    cursor: pointer;
+  }
+
+  .ham-img {
+    height: 40px;
+    width: 50px;
+  }
+
+  .aside-bar {
+    position: fixed;
+    width: 0;
+    height: 0;
+    left: -100%;
+    transition: all ease-out 1s;
+  }
+
+  .small-aside-bar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background: var(--smallAsideBgColor);
+    transition: all ease-out 0.7s;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+  }
+}

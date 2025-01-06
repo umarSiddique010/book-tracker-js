@@ -1,0 +1,158 @@
+.library-section {
+  grid-row: 3/4;
+  padding-top: 80px;
+  border-top: 0.1px solid var(--mainSplitColor);
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 80px;
+}
+
+.library-container,
+.info-bar-container {
+  height: fit-content;
+  width: 95%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.library-wrapper,
+.info-bar-box {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 30fr 20fr 8fr 12fr 20fr 20fr;
+  place-items: center;
+  gap: 20px;
+  border-radius: 25px;
+  text-align: center;
+  background: var(--fifthColor);
+  box-shadow: var(--primaryShadowColor) 0 0 1.5px 0;
+}
+
+.info-bar-box {
+  background: var(--mainColor);
+  margin: 40px 0;
+  box-shadow: none;
+}
+
+.book-heading,
+.inf-book-heading {
+  grid-column: 1/2;
+}
+
+.author-heading,
+.info-author-heading {
+  grid-column: 2/3;
+}
+
+.page-num-para,
+.info-page-num {
+  grid-column: 3/4;
+}
+
+.read-para-box,
+.info-read-para {
+  grid-column: 4/5;
+}
+
+.read-para {
+  margin-top: 10px;
+}
+
+.edit-btn,
+.done-edit-btn {
+  grid-column: 5/6;
+  background: var(--primaryColor);
+  padding: 15px 30px;
+  cursor: pointer;
+}
+
+.done-edit-btn {
+  background: var(--thirdColor);
+}
+
+.delete-btn {
+  grid-column: 6/7;
+  background: var(--secondaryColor);
+  height: 100%;
+  width: 100%;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.info-edit {
+  grid-column: 5/6;
+  padding: 15px 30px;
+}
+.info-delete {
+  margin-top: 45%;
+  height: 100%;
+  width: 100%;
+  grid-column: 6/7;
+}
+
+.highlight {
+  border: 1px dotted var(--secondaryColor);
+  padding: 0 12px;
+}
+
+@media (max-width: 1024px) {
+  .library-wrapper,
+  .info-bar-box {
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(2, 50%);
+  }
+
+  .book-heading,
+  .inf-book-heading {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  .author-heading,
+  .info-author-heading {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+
+  .page-num-para,
+  .info-page-num {
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+
+  .read-para-box,
+  .info-read-para {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  .edit-btn,
+  .done-edit-btn,
+  .info-edit {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    height: 50px;
+  }
+
+  .delete-btn,
+  .info-delete {
+    grid-column: 3/4;
+    grid-row: 2/3;
+    width: 110px;
+    height: 50px;
+  }
+
+  .info-delete {
+    margin-top: 20%;
+  }
+}

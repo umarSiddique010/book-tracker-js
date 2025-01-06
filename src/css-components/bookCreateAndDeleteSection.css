@@ -1,0 +1,66 @@
+.book-curd-section {
+  height: 340px;
+  width: 100%;
+  grid-row: 2/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.curd-btn-wrapper {
+  height: 170px;
+  width: 70%;
+  background: var(--primaryColor);
+  border-radius: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 120px;
+  padding-bottom: 20px;
+}
+
+.delete-all-books,
+.create-book {
+  height: 35%;
+  width: 24%;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+}
+
+.delete-all-books {
+  background: var(--secondaryColor);
+}
+
+.create-book {
+  background: var(--thirdColor);
+}
+
+.delete-all-books:hover,
+.create-book:hover {
+  background: var(--primaryCompColor);
+  box-shadow: var(--primaryShadowColor) 0 0 2px 0;
+}
+
+@media (max-width: 1024px) {
+  .book-curd-section {
+    justify-self: center;
+    width: 90%;
+  }
+
+  .curd-btn-wrapper {
+    gap: 10px;
+    height: 240px;
+    width: 538px;
+  }
+
+  .delete-all-books,
+  .create-book {
+    height: 30%;
+    width: 40%;
+  }
+}

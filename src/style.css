@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("./css-components/inputForm.css");
+@import url("./css-components/asideBar.css");
+@import url("./css-components/bookCreateAndDeleteSection.css");
+@import url("./css-components/librarySection.css");
+
+:root {
+  --primaryColor: #23305d;
+  --primaryCompColor: #212946;
+  --primaryShadowColor: #33406dbc;
+  --secondaryColor: #5d2330;
+  --thirdColor: #244a48;
+  --fourthColor: #404040;
+  --fifthColor: #0e1325;
+  --mainBgColor: #151d38;
+  --mainSplitColor: #1a3d104f;
+  --asideBgColor: #1c264b;
+  --smallAsideBgColor: #1c264b6f;
+  --asideTextColor: #5d6700;
+  --asideDotColor: #5e2d31;
+  --asideSplitColor: #194e194f;
+  --FormBgColor: #212946;
+  --formCompColor: #191f35;
+  --hamburgerBgColor: #1c264b20;
+  --whiteShadowColor: #e9ebf03d;
+  --textColor: #e9ebf0;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  color: var(--textColor);
+  font-family: "Montserrat", serif;
+  font-style: normal;
+  font-size: large;
+  font-weight: 500;
+  letter-spacing: 1.9px;
+  word-spacing: 2.9px;
+  line-height: 25px;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: var(--mainBgColor);
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20fr 80fr;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  grid-column: 2/3;
+  display: grid;
+  background: var(--mainBgColor);
+  grid-template-rows: 190px 340px 100%;
+}
+
+.main-heading {
+  grid-row: 1/2;
+  text-align: center;
+  font-size: 3.4rem;
+  place-self: center;
+  padding: 40px;
+}
+
+.activity-msg-box {
+  position: fixed;
+  top: 2%;
+  left: 50%;
+  margin-left: -200px;
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  padding: 10px 50px 50px 50px;
+  background: var(--secondaryColor);
+  z-index: 1000;
+  box-shadow: var(--whiteShadowColor) 0 0 15px 0;
+  border: 1.5px dotted var(--primaryColor);
+  transition: all ease-in-out 1s;
+transform-origin: center;
+transform: scale3d(1.1, 1.1, 1.1);
+}
+
+.msg-para {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.activity-close-btn {
+  height: 50px;
+  width: 60px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.activity-close-btn img {
+  height: 40px;
+  width: 50px;
+}
+
+@media (max-width: 1024px) {
+  .activity-msg-box {
+    left: 70%;
+    width: 40%;
+    height: fit-content;
+  }
+  .main-heading {
+    line-height: 80px;
+  }
+  #root {
+    display: block;
+  }
+}

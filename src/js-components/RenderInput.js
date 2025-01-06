@@ -1,0 +1,71 @@
+import UtilityModule from "./UtilityModule";
+
+export default class RenderInput {
+  constructor(libraryState, renderLibrary) {
+    this.libraryState = libraryState;
+    this.renderLibrary = renderLibrary;
+  }
+
+  initializeForm() {
+    const submitBtn = document.querySelector("#submitBtn");
+
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const newBookId = Date.now();
+      const bookNameValue = document.querySelector("#bookName").value.trim();
+      const authorNameValue = document
+        .querySelector("#authorName")
+        .value.trim();
+      const pageNumberValue = document
+        .querySelector("#pageNumber")
+        .value.trim();
+      const haveReadValue = document.querySelector("#haveRead").value.trim();
+
+
+      let errorMessages = []
+      if (
+        bookNameValue === "" ||
+        authorNameValue === "" ||
+        pageNumberValue === ""
+      ) {
+        errorMessages.push(
+          "Book name, Author name or page number cannot be empty"
+        );
+
+      }
+
+      if (isNaN(Number(pageNumberValue))) {
+        errorMessages.push("page number's value must be number");
+      }
+
+      if (errorMessages.length > 0) {
+        errorMessages.forEach(msg => UtilityModule.activityMsg(msg))
+        errorMessages = []
+        return
+      }
+
+
+      this.libraryState.storeBooks(
+        newBookId,
+        bookNameValue,
+        authorNameValue,
+        pageNumberValue,
+        haveReadValue
+      );
+
+      this.renderLibrary.renderBooks();
+
+      document.querySelector(".form-container").classList.add("hidden");
+
+      this.resetForm();
+      UtilityModule.activityMsg("Book added successfully");
+    });
+  }
+
+  resetForm() {
+    document.querySelector("#bookName").value = "";
+    document.querySelector("#authorName").value = "";
+    document.querySelector("#pageNumber").value = "";
+    document.querySelector("#haveRead").value = "Yes";
+  }
+}
