@@ -11,7 +11,7 @@
 .curd-btn-wrapper {
   height: 170px;
   width: 70%;
-  background: var(--primaryColor);
+  background-color: var(--crudBarBg);
   border-radius: 0.5px;
   display: flex;
   justify-content: center;
@@ -23,44 +23,53 @@
 
 .delete-all-books,
 .create-book {
-  height: 35%;
-  width: 24%;
+  background-color: transparent;
+  height: 60%;
+  aspect-ratio: 1/1;
   border-radius: 5px;
   margin: 10px;
   padding: 10px;
   cursor: pointer;
   transition: all ease-in-out 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.delete-all-books {
-  background: var(--secondaryColor);
-}
-
-.create-book {
-  background: var(--thirdColor);
+.delete-all-icon,
+.create-icon {
+  width: 70px;
+  aspect-ratio: 1/1;
 }
 
 .delete-all-books:hover,
 .create-book:hover {
-  background: var(--primaryCompColor);
-  box-shadow: var(--primaryShadowColor) 0 0 2px 0;
+  background-color: var(--primaryCompColor);
 }
 
 @media (max-width: 1024px) {
   .book-curd-section {
     justify-self: center;
-    width: 90%;
+    width: 95%;
+    height: 240px;
+    padding: 0;
   }
 
   .curd-btn-wrapper {
     gap: 10px;
-    height: 240px;
-    width: 538px;
+    height: 140px;
+    margin-bottom: -60px;
+    width: 100%;
   }
 
   .delete-all-books,
   .create-book {
-    height: 30%;
+    height: 20%;
     width: 40%;
+  }
+  .delete-all-icon,
+  .create-icon {
+    width: 55px;
+    aspect-ratio: 1/1;
   }
 }

@@ -1,7 +1,7 @@
-import CloseImg from "../asset/close-hamburger.svg";
+import CloseImg from '../asset/close-hamburger.svg';
 
 export default class UtilityModule {
-  static rootDiv = document.querySelector("#root");
+  static rootDiv = document.querySelector('#root');
 
   static createElement(tagName, parentName, texts, classNames) {
     const elementName = document.createElement(tagName);
@@ -11,7 +11,7 @@ export default class UtilityModule {
     }
 
     if (classNames) {
-      elementName.classList.add(...classNames.split(" "));
+      elementName.classList.add(...classNames.split(' '));
     }
 
     parentName.appendChild(elementName);
@@ -21,28 +21,30 @@ export default class UtilityModule {
 
   static activityMsg(message) {
     const msgBox = this.createElement(
-      "div",
+      'div',
       this.rootDiv,
       null,
-      "activity-msg-box"
+      'activity-msg-box'
     );
 
     const closeBtn = this.createElement(
-      "button",
+      'button',
       msgBox,
       null,
-      "activity-close-btn"
+      'activity-close-btn'
     );
 
-    const closeImg = this.createElement("img", closeBtn, null, null);
+    this.createElement('div', msgBox, null, 'activity-progress-bar');
+
+    const closeImg = this.createElement('img', closeBtn, null, null);
     closeImg.src = CloseImg;
 
-    this.createElement("p", msgBox, message, "msg-para");
+    this.createElement('p', msgBox, message, 'msg-para');
 
-    closeBtn.addEventListener("click", () => msgBox.remove());
+    closeBtn.addEventListener('click', () => msgBox.remove());
 
     setTimeout(() => {
       msgBox.remove();
-    }, 4000);
+    }, 6000);
   }
 }

@@ -1,44 +1,44 @@
-import closeBtn from "../asset/close-hamburger.svg";
-import UtilityModule from "./UtilityModule.js";
-import { fields, dropDowns } from "./data/bookFormInputsData.js";
+import closeBtn from '../asset/close-hamburger.svg';
+import UtilityModule from './UtilityModule.js';
+import { fields, dropDowns } from './data/bookFormInputsData.js';
 
 export default class RenderInput {
   renderBookForm() {
     if (!Array.isArray(fields) || fields.length <= 0) {
-      throw new Error("fields data is missing or Invalid");
+      throw new Error('fields data is missing or Invalid');
     }
 
     if (!Array.isArray(dropDowns) || dropDowns.length <= 0) {
-      throw new Error("dropDowns data is missing or invalid");
+      throw new Error('dropDowns data is missing or invalid');
     }
 
     const formContainer = UtilityModule.createElement(
-      "div",
+      'div',
       UtilityModule.rootDiv,
       null,
-      "form-container hidden"
+      'form-container hidden first-load-hidden-form'
     );
 
     const inputForm = UtilityModule.createElement(
-      "form",
+      'form',
       formContainer,
       null,
       null
     );
-    inputForm.setAttribute("id", "form");
+    inputForm.setAttribute('id', 'form');
 
     const closeFormBtn = UtilityModule.createElement(
-      "button",
+      'button',
       inputForm,
       null,
-      "close-form-btn"
+      'close-form-btn'
     );
 
     const closeBtnImg = UtilityModule.createElement(
-      "img",
+      'img',
       closeFormBtn,
       null,
-      "close-btn-img"
+      'close-btn-img'
     );
 
     closeBtnImg.src = closeBtn;
@@ -51,45 +51,45 @@ export default class RenderInput {
 
   inputSubmitBtn(inputForm) {
     const btnWrapper = UtilityModule.createElement(
-      "div",
+      'div',
       inputForm,
       null,
-      "create-btn-wrapper"
+      'create-btn-wrapper'
     );
 
     const submitBtn = UtilityModule.createElement(
-      "button",
+      'button',
       btnWrapper,
-      "Add",
+      'Add book',
       null
     );
 
-    submitBtn.setAttribute("type", "submit");
-    submitBtn.id = "submitBtn";
+    submitBtn.setAttribute('type', 'submit');
+    submitBtn.id = 'submitBtn';
   }
 
   inputFields(field, inputForm) {
     const { label, id, placeholder, type } = field;
 
     const fieldWrapper = UtilityModule.createElement(
-      "div",
+      'div',
       inputForm,
       null,
-      "field-wrapper"
+      'field-wrapper'
     );
 
     const fieldLabel = UtilityModule.createElement(
-      "label",
+      'label',
       fieldWrapper,
       label,
       null
     );
-    fieldLabel.setAttribute("for", id);
+    fieldLabel.setAttribute('for', id);
 
-    UtilityModule.createElement("br", fieldWrapper, null, null);
+    UtilityModule.createElement('br', fieldWrapper, null, null);
 
     const fieldInput = UtilityModule.createElement(
-      "input",
+      'input',
       fieldWrapper,
       null,
       null
@@ -103,66 +103,67 @@ export default class RenderInput {
     const { label, id, options } = dropDown;
 
     const optionWrapper = UtilityModule.createElement(
-      "div",
+      'div',
       inputForm,
       null,
-      "dropdown-wrapper"
+      'dropdown-wrapper'
     );
 
     const optionLabel = UtilityModule.createElement(
-      "label",
+      'label',
       optionWrapper,
       label,
       null
     );
 
-    optionLabel.setAttribute("for", id);
+    optionLabel.setAttribute('for', id);
 
-    UtilityModule.createElement("br", optionWrapper, null, null);
+    UtilityModule.createElement('br', optionWrapper, null, null);
 
     const selectElement = UtilityModule.createElement(
-      "select",
+      'select',
       optionWrapper,
       null,
       null
     );
-    selectElement.setAttribute("name", id);
+    selectElement.setAttribute('name', id);
     selectElement.id = id;
 
     options.forEach((option) => {
       const optionTag = UtilityModule.createElement(
-        "option",
+        'option',
         selectElement,
         option,
         null
       );
-      optionTag.setAttribute("value", option);
+      optionTag.setAttribute('value', option);
     });
   }
 
   stopFormPropagation() {
-    form.addEventListener("click", (e) => {
+    const form = document.getElementById('form');
+    if (!form) return;
+    form.addEventListener('click', (e) => {
       e.stopPropagation();
     });
   }
 
   formContainerHandler() {
-    const form = document.querySelector("#form");
-    const formCont = document.querySelector(".form-container");
-    formCont.addEventListener("click", (e) => {
+    const formCont = document.querySelector('.form-container');
+    formCont.addEventListener('click', (e) => {
       e.preventDefault();
-      formCont.classList.add("hidden");
+      formCont.classList.add('hidden');
     });
     this.stopFormPropagation();
   }
 
   formElementCloseHandler() {
-    const closeFormBtn = document.querySelector(".close-form-btn");
-    const formCont = document.querySelector(".form-container");
+    const closeFormBtn = document.querySelector('.close-form-btn');
+    const formCont = document.querySelector('.form-container');
 
-    closeFormBtn.addEventListener("click", (e) => {
+    closeFormBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      formCont.classList.add("hidden");
+      formCont.classList.add('hidden');
     });
     this.stopFormPropagation();
   }

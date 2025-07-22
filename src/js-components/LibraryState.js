@@ -1,5 +1,5 @@
-import AddBooks from "./AddBooks.js";
-import LibraryStore from "./LibraryStore.js";
+import AddBooks from './AddBooks.js';
+import LibraryStore from './LibraryStore.js';
 
 export default class LibraryState {
   storeBooks(bookId, authorName, bookName, pageNumber, haveRead) {
@@ -30,7 +30,7 @@ export default class LibraryState {
       LibraryStore.storedBooks[authorIndex].haveRead = haveRead;
       LibraryStore.saveBook();
     } else {
-      alert("no book found");
+      alert('no book found');
     }
   }
 }

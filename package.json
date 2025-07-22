@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack server --mode development"
+    "start": "webpack server --mode development",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,9 @@
     "webpack-cli": "^6.0.1"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.4",
     "webpack-dev-server": "^5.2.0"
   }
 }

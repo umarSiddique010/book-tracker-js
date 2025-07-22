@@ -1,16 +1,17 @@
 .aside-bar {
   grid-column: 1/2;
   height: 100%;
-  width: 295px;
-  background: var(--asideBgColor);
+  width: 100%;
+  background-color: var(--asideBgColor);
   display: grid;
   grid-template-rows: 50fr 50fr;
+  overflow-y: scroll;
 }
 
 .aside-container {
   width: 100%;
   max-height: 1050px;
-  background: transparent;
+  background-color: transparent;
 }
 
 .yet-to-read-container,
@@ -27,7 +28,6 @@
 }
 .yet-to-read-container {
   padding-top: 20px;
-  border-top: 0.1px solid var(--asideSplitColor);
 }
 .done-reading-container {
   grid-row: 1/2;
@@ -63,18 +63,18 @@
   text-decoration: none;
   height: fit-content;
   width: fit-content;
+  margin-left: 5px;
   color: var(--asideTextColor);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   list-style: disc;
-  letter-spacing: 3.5px;
+  letter-spacing: 2.5px;
   text-align: center;
 }
 
 .book-name-anchor::before {
-  content: "• ";
-  color: var(--asideDotColor);
-  font-size: 1.5rem;
+  content: '‣ ';
+  color: var(--asideTextColor);
 }
 
 .small--screen-aside-Btn {
@@ -91,13 +91,13 @@
     margin-left: 100px;
     margin-top: 70px;
     font-size: 2rem;
-    background: var(--asideBgColor);
+    background-color: var(--asideBgColor);
   }
 
   .yet-to-read-container,
   .done-reading-container {
     width: 80%;
-    background: var(--asideBgColor);
+    background-color: var(--asideBgColor);
   }
 
   .small--screen-aside-Btn {
@@ -105,7 +105,7 @@
     position: absolute;
     left: 10px;
     top: 10px;
-    background: transparent;
+    background-color: transparent;
     height: min-content;
     width: min-content;
     z-index: 400;
@@ -113,8 +113,9 @@
   }
 
   .ham-img {
-    height: 40px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
+    background-color: var(--hamburgerBgColor);
   }
 
   .aside-bar {
@@ -134,10 +135,23 @@
     height: 100%;
     width: 100%;
     z-index: 100;
-    background: var(--smallAsideBgColor);
+    background-color: var(--smallAsideBgColor);
     transition: all ease-out 0.7s;
     overflow: scroll;
     scroll-behavior: smooth;
     scrollbar-width: thin;
+  }
+}
+
+@media (max-width: 535px) {
+  .aside-container {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .yet-to-read-container,
+  .done-reading-container {
+    width: 100%;
+    margin-left: 0;
   }
 }

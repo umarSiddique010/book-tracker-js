@@ -1,5 +1,8 @@
-import LibraryStore from "./LibraryStore.js";
-import UtilityModule from "./UtilityModule.js";
+import LibraryStore from './LibraryStore.js';
+import UtilityModule from './UtilityModule.js';
+import DeleteIcon from '../asset/delete.png';
+import EditIcon from '../asset/edit.png';
+import DoneIcon from '../asset/tick.png';
 
 export default class RenderLibrary {
   constructor(libraryState, renderUI, asideBar) {
@@ -7,44 +10,23 @@ export default class RenderLibrary {
     this.renderUI = renderUI;
     this.asideBar = asideBar;
     this.librarySection = UtilityModule.createElement(
-      "section",
+      'section',
       this.renderUI.mainTag,
       null,
-      "library-section"
+      'library-section'
     );
-  }
-
-  renderInfoBar() {
-    const infoBarContainer = UtilityModule.createElement(
-      "div",
-      this.librarySection,
-      null,
-      "info-bar-container"
-    );
-
-    infoBarContainer.innerHTML = `
-    <div class="info-bar-box">
-    <h2 class="inf-book-heading">Book name</h2>
-    <h3 class="info-author-heading">Author name</h3>
-    <p class="info-page-num">Page number</p>
-    <p class="info-read-para">Have You read</p>
-    <p class="info-edit">Edit</p>
-    <p class="info-delete">Delete</p>
-    </div>
-    `;
   }
 
   renderBooks() {
     if (this.librarySection) {
-      this.librarySection.innerHTML = "";
+      this.librarySection.innerHTML = '';
     }
 
-    this.renderInfoBar();
     const libraryContainer = UtilityModule.createElement(
-      "div",
+      'div',
       this.librarySection,
       null,
-      "library-container"
+      'library-container'
     );
 
     LibraryStore.storedBooks.forEach(
@@ -73,47 +55,77 @@ export default class RenderLibrary {
     haveRead
   ) {
     const libraryWrapper = UtilityModule.createElement(
-      "div",
+      'div',
       libraryContainer,
       null,
-      "library-wrapper"
+      'library-wrapper'
     );
 
-    libraryWrapper.setAttribute("id", `${bookId}`);
-
-    UtilityModule.createElement("h2", libraryWrapper, bookName, "book-heading");
+    libraryWrapper.setAttribute('id', `${bookId}`);
 
     UtilityModule.createElement(
-      "h3",
+      'h2',
       libraryWrapper,
-      authorName,
-      "author-heading"
+      `Book: ${bookName}`,
+      'book-heading'
     );
 
     UtilityModule.createElement(
-      "p",
+      'h3',
       libraryWrapper,
-      pageNumber,
-      "page-num-para"
+      `Author: ${authorName}`,
+      'author-heading'
+    );
+
+    UtilityModule.createElement(
+      'p',
+      libraryWrapper,
+      `Pages: ${pageNumber}`,
+      'page-num-para'
     );
 
     const readPara = UtilityModule.createElement(
-      "p",
+      'p',
       libraryWrapper,
       null,
-      "read-para-box"
+      'read-para-box'
     );
 
-    readPara.innerHTML = `<span>Read: </span> <span class="read-para">${haveRead}</span> `;
+    readPara.innerHTML = `<span><span>Read: </span><span class="read-para">${haveRead}</span></span>`;
 
-    UtilityModule.createElement("button", libraryWrapper, "Edit", "edit-btn");
-
-    UtilityModule.createElement(
-      "button",
+    const editBtn = UtilityModule.createElement(
+      'button',
       libraryWrapper,
-      "Delete",
-      "delete-btn"
+      null,
+      'edit-btn'
     );
+
+    const editIcon = UtilityModule.createElement(
+      'img',
+      editBtn,
+      null,
+      'edit-icon'
+    );
+
+    editIcon.src = EditIcon;
+    editIcon.alt = 'edit';
+
+    const deleteBtn = UtilityModule.createElement(
+      'button',
+      libraryWrapper,
+      null,
+      'delete-btn'
+    );
+
+    const deleteIcon = UtilityModule.createElement(
+      'img',
+      deleteBtn,
+      null,
+      'delete-icon'
+    );
+
+    deleteIcon.src = DeleteIcon;
+    deleteIcon.alt = 'delete';
   }
 
   capitalizeEditValue(haveRead) {
@@ -121,60 +133,64 @@ export default class RenderLibrary {
   }
 
   successfulEditMsg(readValue, libraryWrapper) {
-    let errorMessage = [];
+    let message = [];
 
     const bookName = libraryWrapper
-      .querySelector(".book-heading")
+      .querySelector('.book-heading')
       .textContent.trim();
-    if (readValue === "Yes") {
-      errorMessage.push(`Edited to Yes. "${bookName}" added in 'Done reading'`);
+    if (readValue === 'Yes') {
+      message.push(`Edited to Yes. "${bookName}" added in 'Done reading'`);
     }
 
-    if (readValue === "No") {
-      errorMessage.push(`Edited to No. "${bookName}" added in 'Yet to read'`);
+    if (readValue === 'No') {
+      message.push(`Edited to No. "${bookName}" added in 'Yet to read'`);
     }
 
-    if (errorMessage.length > 0) {
-      errorMessage.forEach((msg) => UtilityModule.activityMsg(`${msg}`));
-      errorMessage = []
+    if (message.length > 0) {
+      message.forEach((msg) => UtilityModule.activityMsg(`${msg}`));
+      message = [];
     }
   }
 
   attachEditAndDoneHandler() {
-    document.addEventListener("click", (e) => {
-      const target = e.target;
+    document.addEventListener('click', (e) => {
+      const editBtn = e.target.closest('.edit-btn');
+      const doneBtn = e.target.closest('.done-edit-btn');
 
-      if (target.classList.contains("edit-btn")) {
-        const libraryWrapper = e.target.closest(".library-wrapper");
+      if (editBtn) {
+        const libraryWrapper = editBtn.closest('.library-wrapper');
+        const readPara = libraryWrapper.querySelector('.read-para');
 
-        const readPara = libraryWrapper.querySelector(".read-para");
+        readPara.contentEditable = 'true';
+        readPara.classList.add('highlight');
 
-        readPara.contentEditable = "true";
-        readPara.classList.add("highlight");
-        target.textContent = "Done";
-        target.classList.add("done-edit-btn");
-        target.classList.remove("edit-btn");
-      } else if (target.classList.contains("done-edit-btn")) {
-        const libraryWrapper = e.target.closest(".library-wrapper");
-        const getBookId = parseInt(libraryWrapper.getAttribute("id"));
-        const readPara = libraryWrapper.querySelector(".read-para");
+        readPara.focus();
 
-        const haveRead = readPara.textContent;
+        editBtn.classList.add('done-edit-btn');
+        editBtn.classList.remove('edit-btn');
+        editBtn.innerHTML = `
+        <img src="${DoneIcon}" alt="done" class="done-icon">
+        `;
+      } else if (doneBtn) {
+        const libraryWrapper = doneBtn.closest('.library-wrapper');
+        const getBookId = parseInt(libraryWrapper.getAttribute('id'), 10);
+        const readPara = libraryWrapper.querySelector('.read-para');
+        const haveRead = readPara.textContent.trim().toLowerCase();
 
-        const readValue = this.capitalizeEditValue(haveRead);
-
-        this.libraryState.editRead(readValue, getBookId);
-
-        if (!["Yes", "yes", "No", "no"].includes(haveRead)) {
-          UtilityModule.activityMsg("Please enter 'Yes' or 'No'");
+        if (!['yes', 'no'].includes(haveRead)) {
+          UtilityModule.activityMsg('Please enter "yes" or "no"');
           return;
         }
+        const readValue = this.capitalizeEditValue(haveRead);
+        this.libraryState.editRead(readValue, getBookId);
 
-        readPara.classList.remove("highlight");
-        readPara.contentEditable = "false";
-        target.textContent = "Edit";
-        target.classList.add("edit-btn");
-        target.classList.remove("done-edit-btn");
+        doneBtn.innerHTML = `
+        <img src="${EditIcon}" alt="edit" class="edit-icon">
+        `;
+        doneBtn.classList.remove('done-edit-btn');
+        readPara.classList.remove('highlight');
+        readPara.contentEditable = 'false';
+        doneBtn.classList.add('edit-btn');
 
         this.renderBooks();
         this.successfulEditMsg(readValue, libraryWrapper);
@@ -183,19 +199,21 @@ export default class RenderLibrary {
   }
 
   attachDeleteBookHandler() {
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("delete-btn")) {
-        const libraryWrapper = e.target.closest(".library-wrapper");
+    document.addEventListener('click', (e) => {
+      const deleteBtn = e.target.closest('.delete-btn');
+
+      if (deleteBtn) {
+        const libraryWrapper = deleteBtn.closest('.library-wrapper');
         const bookName = libraryWrapper
-          .querySelector(".book-heading")
+          .querySelector('.book-heading')
           .textContent.trim();
 
-        const getBookId = parseInt(libraryWrapper.getAttribute("id"));
+        const getBookId = parseInt(libraryWrapper.getAttribute('id'));
 
         this.libraryState.deleteBook(getBookId);
         this.renderBooks();
         UtilityModule.activityMsg(
-          `"${bookName}" book's been successfully removed from library`
+          `"${bookName}" book been successfully removed from library`
         );
       }
     });

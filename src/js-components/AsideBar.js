@@ -1,35 +1,35 @@
-import hamburgerMenu from "../asset/hamburger-menu.svg";
-import closeHamburger from "../asset/close-hamburger.svg";
-import UtilityModule from "./UtilityModule.js";
-import LibraryStore from "./LibraryStore.js";
+import hamburgerMenu from '../asset/hamburger-menu.svg';
+import closeHamburger from '../asset/close-hamburger.svg';
+import UtilityModule from './UtilityModule.js';
+import LibraryStore from './LibraryStore.js';
 import {
   asideDoneReading,
   asideYetToRead,
-} from "./data/asideBarElementsData.js";
+} from './data/asideBarElementsData.js';
 
 export default class AsideBar {
   constructor() {
     this.aside = UtilityModule.createElement(
-      "aside",
+      'aside',
       UtilityModule.rootDiv,
       null,
-      "aside-bar"
+      'aside-bar'
     );
 
     this.asideContainer = UtilityModule.createElement(
-      "div",
+      'div',
       this.aside,
       null,
-      "aside-container"
+      'aside-container'
     );
   }
 
   doneReading() {
     const doneReadingContainer = UtilityModule.createElement(
-      "div",
+      'div',
       this.asideContainer,
       null,
-      "done-reading-container"
+      'done-reading-container'
     );
 
     asideDoneReading.forEach(({ element, text, classNames }) => {
@@ -44,10 +44,10 @@ export default class AsideBar {
 
   yetToRead() {
     const yetToReadContainer = UtilityModule.createElement(
-      "div",
+      'div',
       this.asideContainer,
       null,
-      "yet-to-read-container"
+      'yet-to-read-container'
     );
 
     asideYetToRead.forEach(({ element, text, classNames }) => {
@@ -61,44 +61,44 @@ export default class AsideBar {
   }
 
   appendDoneReading() {
-    const doneReadingBox = document.querySelector(".done-reading-box");
+    const doneReadingBox = document.querySelector('.done-reading-box');
 
     if (doneReadingBox) {
-      doneReadingBox.innerHTML = "";
+      doneReadingBox.innerHTML = '';
     }
 
     LibraryStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
-        if (haveRead === "Yes") {
+        if (haveRead === 'Yes') {
           const bookNameAnchor = UtilityModule.createElement(
-            "a",
+            'a',
             doneReadingBox,
             `${bookName}`,
-            "book-name-anchor"
+            'book-name-anchor'
           );
-          bookNameAnchor.setAttribute("href", `#${bookId}`);
+          bookNameAnchor.setAttribute('href', `#${bookId}`);
         }
       }
     );
   }
 
   appendYetToRead() {
-    const yetToReadBox = document.querySelector(".yet-to-read-box");
+    const yetToReadBox = document.querySelector('.yet-to-read-box');
 
-    if (yetToReadBox) {
-      yetToReadBox.innerHTML = "";
-    }
+    if (!yetToReadBox) return;
+
+    yetToReadBox.innerHTML = '';
 
     LibraryStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
-        if (haveRead === "No") {
+        if (haveRead === 'No') {
           const bookNameAnchor = UtilityModule.createElement(
-            "a",
+            'a',
             yetToReadBox,
             `${bookName}`,
-            "book-name-anchor"
+            'book-name-anchor'
           );
-          bookNameAnchor.setAttribute("href", `#${bookId}`);
+          bookNameAnchor.setAttribute('href', `#${bookId}`);
         }
       }
     );
@@ -106,52 +106,58 @@ export default class AsideBar {
 
   smallScreenAsideBar() {
     const smallScreenAsideBtn = UtilityModule.createElement(
-      "button",
+      'button',
       UtilityModule.rootDiv,
       null,
-      "small--screen-aside-Btn"
+      'small--screen-aside-Btn'
     );
     const hamImg = UtilityModule.createElement(
-      "img",
+      'img',
       smallScreenAsideBtn,
       null,
-      "ham-img"
+      'ham-img'
     );
     hamImg.src = hamburgerMenu;
   }
 
   smallScreenAsideHandler() {
-    const hamImg = document.querySelector(".ham-img");
-    const asideBar = document.querySelector(".aside-bar");
-    document
-      .querySelector(".small--screen-aside-Btn")
-      .addEventListener("click", () => {
-        if (asideBar.classList.contains("aside-bar")) {
-          asideBar.classList.remove("aside-bar");
-          asideBar.classList.add("small-aside-bar");
-          hamImg.src = closeHamburger;
-        } else {
-          asideBar.classList.add("aside-bar");
-          asideBar.classList.remove("small-aside-bar");
-          hamImg.src = hamburgerMenu;
-        }
-      });
+    const hamImg = document.querySelector('.ham-img');
+    const asideBar = document.querySelector('.aside-bar');
+    const btn = document.querySelector('.small--screen-aside-Btn');
+
+    if (!hamImg || !asideBar || !btn) return;
+
+    btn.addEventListener('click', () => {
+      if (asideBar.classList.contains('aside-bar')) {
+        asideBar.classList.remove('aside-bar');
+        asideBar.classList.add('small-aside-bar');
+        hamImg.src = closeHamburger;
+      } else {
+        asideBar.classList.add('aside-bar');
+        asideBar.classList.remove('small-aside-bar');
+        hamImg.src = hamburgerMenu;
+      }
+    });
   }
 
   asideContainerHandler() {
-    const asideBar = document.querySelector(".aside-bar");
-    const asideContainer = document.querySelector(".aside-container");
-    const hamImg = document.querySelector(".ham-img");
+    const asideBar = document.querySelector('.aside-bar');
+    const asideContainer = document.querySelector('.aside-container');
+    const hamImg = document.querySelector('.ham-img');
 
-    asideBar.addEventListener("click", (e) => {
-      e.stopPropagation();
-      asideBar.classList.add("aside-bar");
-      asideBar.classList.remove("small-aside-bar");
-      hamImg.src = hamburgerMenu;
-    });
+    if (asideBar) {
+      asideBar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        asideBar.classList.add('aside-bar');
+        asideBar.classList.remove('small-aside-bar');
+        hamImg.src = hamburgerMenu;
+      });
+    }
 
-    asideContainer.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
+    if (asideContainer) {
+      asideContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
   }
 }

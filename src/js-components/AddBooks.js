@@ -1,8 +1,8 @@
 export default class AddBooks {
-  constructor(bookId, bookName, authorName, pageNumber, haveRead) {
+  constructor(bookId, authorName, bookName, pageNumber, haveRead) {
     this.bookId = bookId;
-    this.bookName = bookName;
     this.authorName = authorName;
+    this.bookName = bookName;
     this.pageNumber = pageNumber;
     this.haveRead = haveRead;
   }

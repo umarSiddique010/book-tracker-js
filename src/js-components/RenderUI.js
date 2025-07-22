@@ -1,41 +1,47 @@
-import UtilityModule from "./UtilityModule.js";
-import LibraryStore from "./LibraryStore.js";
+import UtilityModule from './UtilityModule.js';
+import LibraryStore from './LibraryStore.js';
+import CreateIcon from '../asset/create.png';
+import DeleteAllIcon from '../asset/delete-folder.png';
 export default class RenderUI {
   constructor() {
     this.mainTag = UtilityModule.createElement(
-      "main",
+      'main',
       UtilityModule.rootDiv,
       null,
       null
     );
 
     this.bookCreateAndDeleteSection = UtilityModule.createElement(
-      "section",
+      'section',
       this.mainTag,
       null,
-      "book-curd-section"
+      'book-curd-section'
     );
   }
 
   createLibraryHandler() {
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("create-book")) {
-        const formContainer = document.querySelector(".form-container");
-        formContainer.classList.remove("hidden");
+    document.addEventListener('click', (e) => {
+      const createBtn = e.target.closest('.create-book');
+      if (createBtn) {
+        const formContainer = document.querySelector('.form-container');
+        formContainer.classList.remove('hidden');
+        formContainer.classList.remove('first-load-hidden-form');
       }
     });
   }
 
   deleteAllLibraryHandle(renderLibrary) {
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("delete-all-books")) {
+    document.addEventListener('click', (e) => {
+      const deleteAllBtn = e.target.closest('.delete-all-books');
+
+      if (deleteAllBtn) {
         if (LibraryStore.storedBooks.length <= 0) {
-          UtilityModule.activityMsg("No books to be removed from library");
+          UtilityModule.activityMsg('Your Book Tracker is already empty');
         } else {
           LibraryStore.deleteAllBook();
           LibraryStore.storedBooks = [];
           renderLibrary.renderBooks();
-          UtilityModule.activityMsg("All books have been removed from library");
+          UtilityModule.activityMsg('Your Book Tracker is now empty');
         }
       }
     });
@@ -43,28 +49,50 @@ export default class RenderUI {
 
   mainHeading() {
     UtilityModule.createElement(
-      "h1",
+      'h1',
       this.mainTag,
-      "Your library",
-      "main-heading"
+      'Track Your Books & Reading Progress',
+      'main-heading'
     );
   }
 
   bookCreateAndDeleteBtns() {
     const btnWrapper = UtilityModule.createElement(
-      "button",
+      'button',
       this.bookCreateAndDeleteSection,
       null,
-      "curd-btn-wrapper"
+      'curd-btn-wrapper'
     );
 
-    UtilityModule.createElement(
-      "button",
+    const deleteAllBtn = UtilityModule.createElement(
+      'button',
       btnWrapper,
-      "Delete all",
-      "delete-all-books"
+      null,
+      'delete-all-books'
     );
 
-    UtilityModule.createElement("button", btnWrapper, "Create", "create-book");
+    const deleteAllIcon = UtilityModule.createElement(
+      'img',
+      deleteAllBtn,
+      null,
+      'delete-all-icon'
+    );
+    deleteAllIcon.src = DeleteAllIcon;
+    deleteAllIcon.alt = 'delete all';
+
+    const createBtn = UtilityModule.createElement(
+      'button',
+      btnWrapper,
+      null,
+      'create-book'
+    );
+    const createIcon = UtilityModule.createElement(
+      'img',
+      createBtn,
+      null,
+      'create-icon'
+    );
+    createIcon.src = CreateIcon;
+    createIcon.alt = 'create';
   }
 }

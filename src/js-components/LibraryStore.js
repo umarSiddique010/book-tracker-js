@@ -1,12 +1,13 @@
 export default class LibraryStore {
   static storedBooks =
-    JSON.parse(localStorage.getItem("savedLocalBooks")) || [];
+    JSON.parse(localStorage.getItem('savedLocalBooks')) || [];
 
   static saveBook() {
-    localStorage.setItem("savedLocalBooks", JSON.stringify(this.storedBooks));
+    localStorage.setItem('savedLocalBooks', JSON.stringify(this.storedBooks));
   }
 
   static deleteAllBook() {
-    localStorage.removeItem("savedLocalBooks");
+    localStorage.removeItem('savedLocalBooks');
+    this.storedBooks = [];
   }
 }

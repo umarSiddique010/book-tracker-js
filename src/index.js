@@ -1,11 +1,10 @@
-import UtilityModule from "./js-components/UtilityModule";
-import CreateInput from "./js-components/CreateInput.js";
-import RenderUI from "./js-components/RenderUI.js";
-import AsideBar from "./js-components/AsideBar.js";
-import LibraryState from "./js-components/LibraryState.js";
-import RenderLibrary from "./js-components/RenderLibrary.js";
-import RenderInput from "./js-components/RenderInput.js";
-import "./style.css";
+import CreateInput from './js-components/CreateInput.js';
+import RenderUI from './js-components/RenderUI.js';
+import AsideBar from './js-components/AsideBar.js';
+import LibraryState from './js-components/LibraryState.js';
+import RenderLibrary from './js-components/RenderLibrary.js';
+import RenderInput from './js-components/RenderInput.js';
+import './style.css';
 
 const libraryState = new LibraryState();
 const asideBar = new AsideBar();
@@ -14,7 +13,7 @@ const createInput = new CreateInput(renderUI);
 const renderLibrary = new RenderLibrary(libraryState, renderUI, asideBar);
 const renderInput = new RenderInput(libraryState, renderLibrary);
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   // Directly inside root div
   createInput.renderBookForm();
   createInput.formContainerHandler();

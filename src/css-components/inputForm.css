@@ -4,11 +4,44 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--primaryShadowColor);
+  background-color: var(--formContainerBg);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 600;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  animation: fadeInScale 0.5s ease forwards;
+}
+
+.form-container.hidden {
+  animation: fadeOutScale 0.5s ease forwards;
+}
+
+.first-load-hidden-form {
+  display: none;
+}
+
+.close-form-btn {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  height: 40px;
+  aspect-ratio: 1/1;
+  place-self: end;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 700;
+  background-color: var(--closeFormBtnBgColor);
+  border-radius: 50%;
+  transition: all 0.5s ease-in-out;
+  border: 2px solid black;
+}
+
+.close-form-btn:hover {
+  display: block;
+  background-color: var(--bloodRedColor);
 }
 
 #form {
@@ -17,16 +50,20 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: var(--FormBgColor);
   height: 80%;
   width: 65%;
   gap: 20px;
   border-radius: 8px;
+  background-image: url('../asset/main-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 label {
   margin: 10px 0;
   padding: 10px;
+  font-weight: 600;
 }
 
 .field-wrapper,
@@ -37,78 +74,52 @@ label {
   text-align: center;
 }
 
-input[type="text"],
-input[type="number"],
-select,
-#submitBtn {
+input[type='text'],
+input[type='number'],
+select {
   margin: 10px 0;
   padding: 10px;
   height: 40px;
   width: 70%;
-  background: var(--textColor);
-  color: var(--FormBgColor);
+  background-color: var(--whiteColor);
+  color: var(--inputColor);
   border-radius: 0.5px;
 }
 
 input::placeholder {
-  color: var(--FormBgColor);
+  color: var(--inputColor);
 }
 
 #submitBtn {
-  width: 45%;
-  height: 90%;
+  padding: 15px 50px;
   cursor: pointer;
-  border-radius: 3px;
-  border: 0.5px solid var(--textColor);
-  background: var(--FormBgColor);
-  color: var(--textColor);
-  font-size: 1.4rem;
-  font-weight: 1000;
-  transition: all ease-in-out 0.4s;
+  background-color: var(--submitBtnBgColor);
+  color: var(--whiteColor);
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
 }
 
 #submitBtn:hover {
-  background: none;
-  border: none;
-  color: var(--fifthColor);
-  font-size: 2rem;
-  letter-spacing: 3px;
-}
-
-.close-form-btn {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  height: fit-content;
-  width: fit-content;
-  place-self: end;
-  background: transparent;
-  cursor: pointer;
-  z-index: 700;
-}
-.close-btn-img {
-  height: 50px;
-  width: 60px;
-}
-
-.hidden {
-  display: none;
+  background-color: var(--libraryWrapperBg);
 }
 
 @media (max-width: 1024px) {
   .form-container {
     width: 100%;
+    height: 100%;
     overflow: scroll;
     scroll-behavior: smooth;
   }
 
   #form {
-    height: 88%;
-    width: 88%;
+    height: 100%;
+    width: 100%;
     padding-top: 80px;
     padding-bottom: 40px;
     overflow: scroll;
     scroll-behavior: smooth;
+    border-radius: 0;
   }
 
   .field-wrapper,
@@ -118,11 +129,59 @@ input::placeholder {
     height: 40%;
   }
 
-  input[type="text"],
-  input[type="number"],
-  select,
+  .create-btn-wrapper {
+    height: 100%;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  select {
+    height: 50%;
+    width: 80%;
+    font-size: 1.2rem;
+  }
   #submitBtn {
-    height: 60%;
-    font-size: 1.5rem;
+    padding: 10px 30px;
+    font-size: 1.4rem;
+  }
+
+  .close-form-btn {
+    right: 40px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+  }
+}
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  99% {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: auto;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+    display: none;
+    pointer-events: none;
   }
 }
