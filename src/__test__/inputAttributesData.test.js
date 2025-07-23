@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { bookInputFields, bookFormDropDowns } from '../js-components/data/bookFormInputsData.js';
+import {
+  bookInputFields,
+  bookFormDropDowns,
+} from '../js-components/data/inputAttributesData.js';
 
-describe('bookFormInputsData.js', () => {
+describe('inputAttributesData.js', () => {
   describe('fields', () => {
     it('should define three form field configs with correct structure', () => {
       expect(bookInputFields).toHaveLength(3);

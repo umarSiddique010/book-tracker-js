@@ -1,8 +1,8 @@
 import UtilityModule from './UtilityModule.js';
 
-export default class RenderInput {
-  constructor(trackerState, renderTracker) {
-    this.trackerState = trackerState;
+export default class InputField {
+  constructor(bookStateManagement, renderTracker) {
+    this.bookStateManagement = bookStateManagement;
     this.renderTracker = renderTracker;
   }
 
@@ -33,7 +33,7 @@ export default class RenderInput {
         return;
       }
 
-      this.trackerState.storeBooks(
+      this.bookStateManagement.storeBooks(
         newBookId,
         authorNameValue,
         bookNameValue,

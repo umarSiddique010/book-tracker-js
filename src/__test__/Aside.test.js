@@ -1,41 +1,41 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import UtilityModule from '../js-components/UtilityModule.js';
-import AsideBar from '../js-components/AsideBar.js';
-import TrackerStore from '../js-components/TrackerStore.js';
+import Aside from '../js-components/Aside.js';
+import BookStore from '../js-components/BookStore.js';
 import {
   asideDoneReading,
   asideYetToRead,
-} from '../js-components/data/asideBarElementsData.js';
+} from '../js-components/data/asideElementsData.js';
 
 let rootDiv,
-  asideBar = null;
+  aside = null;
 beforeEach(() => {
   document.body.innerHTML = `<div id="root"></div>`;
   UtilityModule.rootDiv = document.querySelector('#root');
   rootDiv = UtilityModule.rootDiv;
-  asideBar = new AsideBar();
+  aside = new Aside();
 });
 
-describe('AsideBar', () => {
+describe('Aside', () => {
   describe('constructor', () => {
     it('should create an aside bar', () => {
-      expect(asideBar.aside).toBeDefined();
-      expect(asideBar.aside).toBeInstanceOf(HTMLElement);
-      expect(asideBar.aside.classList.contains('aside-bar')).toBe(true);
+      expect(aside.aside).toBeDefined();
+      expect(aside.aside).toBeInstanceOf(HTMLElement);
+      expect(aside.aside.classList.contains('aside-bar')).toBe(true);
     });
 
     it('should create an aside container', () => {
-      expect(asideBar.asideContainer).toBeDefined();
-      expect(asideBar.asideContainer).toBeInstanceOf(HTMLElement);
-      expect(
-        asideBar.asideContainer.classList.contains('aside-container')
-      ).toBe(true);
+      expect(aside.asideContainer).toBeDefined();
+      expect(aside.asideContainer).toBeInstanceOf(HTMLElement);
+      expect(aside.asideContainer.classList.contains('aside-container')).toBe(
+        true
+      );
     });
   });
 
   describe('doneReading()', () => {
     it('should create a "done-reading-container" and populate it with elements from asideDoneReading', () => {
-      asideBar.doneReading();
+      aside.doneReading();
 
       const container = document.querySelector('.done-reading-container');
       expect(container).toBeInstanceOf(HTMLElement);
@@ -58,7 +58,7 @@ describe('AsideBar', () => {
 
   describe('yetToRead()', () => {
     it('should create a "yet-to-read-container" and populate it with elements from asideYetToRead', () => {
-      asideBar.yetToRead();
+      aside.yetToRead();
 
       const container = document.querySelector('.yet-to-read-container');
       expect(container).toBeDefined();
@@ -92,7 +92,7 @@ describe('AsideBar', () => {
 
   describe('appendDoneReading()', () => {
     it('should clear the done-reading-box and append anchors for books with haveRead "Yes"', () => {
-      asideBar.doneReading();
+      aside.doneReading();
 
       const doneReadingBox = document.querySelector('.done-reading-box');
       expect(doneReadingBox).toBeDefined();
@@ -100,7 +100,7 @@ describe('AsideBar', () => {
       doneReadingBox.innerHTML = '<p>Old Content</p>';
       expect(doneReadingBox.innerHTML).toContain('Old Content');
 
-      TrackerStore.storedBooks = [
+      BookStore.storedBooks = [
         {
           bookId: 'book-1',
           bookName: 'Atomic Habits',
@@ -124,7 +124,7 @@ describe('AsideBar', () => {
         },
       ];
 
-      asideBar.appendDoneReading();
+      aside.appendDoneReading();
 
       expect(doneReadingBox.innerHTML).not.toContain('Old Content');
 
@@ -139,9 +139,9 @@ describe('AsideBar', () => {
     });
 
     it('should not append anything if no books have haveRead as "Yes"', () => {
-      asideBar.doneReading();
+      aside.doneReading();
       const doneReadingBox = document.querySelector('.done-reading-box');
-      TrackerStore.storedBooks = [
+      BookStore.storedBooks = [
         {
           bookId: 'book-4',
           bookName: 'The Alchemist',
@@ -151,7 +151,7 @@ describe('AsideBar', () => {
         },
       ];
 
-      asideBar.appendDoneReading();
+      aside.appendDoneReading();
 
       const anchors = doneReadingBox.querySelectorAll('a.book-name-anchor');
       expect(anchors.length).toBe(0);
@@ -161,16 +161,16 @@ describe('AsideBar', () => {
 
   describe('appendYetToRead()', () => {
     it('should not throw if .yet-to-read-box does not exist', () => {
-      expect(() => asideBar.appendYetToRead()).not.toThrow();
+      expect(() => aside.appendYetToRead()).not.toThrow();
     });
 
     it('should clear yet-to-read-box content before appending', () => {
-      asideBar.yetToRead();
+      aside.yetToRead();
 
       const yetToReadBox = document.querySelector('.yet-to-read-box');
       yetToReadBox.innerHTML = '<span>Old Content</span>';
 
-      TrackerStore.storedBooks = [
+      BookStore.storedBooks = [
         {
           bookId: 'book-7',
           bookName: 'Book A',
@@ -180,15 +180,15 @@ describe('AsideBar', () => {
         },
       ];
 
-      asideBar.appendYetToRead();
+      aside.appendYetToRead();
 
       expect(yetToReadBox.innerHTML.includes('Old Content')).toBe(false);
     });
 
     it('should append anchors for books with haveRead === "No"', () => {
-      asideBar.yetToRead();
+      aside.yetToRead();
 
-      TrackerStore.storedBooks = [
+      BookStore.storedBooks = [
         {
           bookId: 'book-9',
           bookName: 'Read Later',
@@ -205,7 +205,7 @@ describe('AsideBar', () => {
         },
       ];
 
-      asideBar.appendYetToRead();
+      aside.appendYetToRead();
 
       const anchors = document.querySelectorAll(
         '.yet-to-read-box a.book-name-anchor'
@@ -216,9 +216,9 @@ describe('AsideBar', () => {
     });
 
     it('should not append anything if no books have haveRead === "No"', () => {
-      asideBar.yetToRead();
+      aside.yetToRead();
 
-      TrackerStore.storedBooks = [
+      BookStore.storedBooks = [
         {
           bookId: 'book-11',
           bookName: 'Done Book',
@@ -228,7 +228,7 @@ describe('AsideBar', () => {
         },
       ];
 
-      asideBar.appendYetToRead();
+      aside.appendYetToRead();
 
       const anchors = document.querySelectorAll(
         '.yet-to-read-box a.book-name-anchor'
@@ -236,24 +236,24 @@ describe('AsideBar', () => {
       expect(anchors.length).toBe(0);
     });
   });
-  describe('smallScreenAsideBar()', () => {
-    it('should create a button with class "small--screen-aside-Btn" inside UtilityModule.rootDiv', () => {
-      asideBar.smallScreenAsideBar();
-      const button = document.querySelector('.small--screen-aside-Btn');
+  describe('smallScreenAside()', () => {
+    it('should create a button with class "small-screen-aside-Btn" inside UtilityModule.rootDiv', () => {
+      aside.smallScreenAside();
+      const button = document.querySelector('.small-screen-aside-Btn');
       expect(button).toBeInstanceOf(HTMLButtonElement);
       expect(button.parentElement).toBe(UtilityModule.rootDiv);
     });
 
     it('should create an img with class "ham-img" inside the small screen button', () => {
-      asideBar.smallScreenAsideBar();
-      const button = document.querySelector('.small--screen-aside-Btn');
+      aside.smallScreenAside();
+      const button = document.querySelector('.small-screen-aside-Btn');
       const img = button.querySelector('.ham-img');
       expect(img).toBeInstanceOf(HTMLImageElement);
       expect(img.parentElement).toBe(button);
     });
 
     it('should set the src of the img to hamburgerMenu', () => {
-      asideBar.smallScreenAsideBar();
+      aside.smallScreenAside();
       const img = document.querySelector('.ham-img');
       expect(img.src).toMatch(/image\/svg\+xml/);
     });
@@ -261,14 +261,14 @@ describe('AsideBar', () => {
 
   describe('smallScreenAsideHandler()', () => {
     beforeEach(() => {
-      asideBar.smallScreenAsideBar();
-      UtilityModule.rootDiv.appendChild(asideBar.aside);
-      asideBar.aside.classList.add('aside-bar');
-      asideBar.smallScreenAsideHandler();
+      aside.smallScreenAside();
+      UtilityModule.rootDiv.appendChild(aside.aside);
+      aside.aside.classList.add('aside-bar');
+      aside.smallScreenAsideHandler();
     });
 
     it('should toggle to small-aside-bar and change hamImg src to closeHamburger on first click', () => {
-      const button = document.querySelector('.small--screen-aside-Btn');
+      const button = document.querySelector('.small-screen-aside-Btn');
       const aside = document.querySelector('.aside-bar');
       const img = document.querySelector('.ham-img');
 
@@ -280,7 +280,7 @@ describe('AsideBar', () => {
     });
 
     it('should toggle back to aside-bar and change hamImg src to hamburgerMenu on second click', () => {
-      const button = document.querySelector('.small--screen-aside-Btn');
+      const button = document.querySelector('.small-screen-aside-Btn');
       const aside = document.querySelector('.aside-bar');
       const img = document.querySelector('.ham-img');
 
@@ -292,10 +292,10 @@ describe('AsideBar', () => {
       expect(img.src).toMatch(/image\/svg\+xml/);
     });
 
-    it('should do nothing if .small--screen-aside-Btn does not exist', () => {
-      document.querySelector('.small--screen-aside-Btn').remove();
-      expect(() => asideBar.smallScreenAsideHandler()).not.toThrow();
-      const button = document.querySelector('.small--screen-aside-Btn');
+    it('should do nothing if .small-screen-aside-Btn does not exist', () => {
+      document.querySelector('.small-screen-aside-Btn').remove();
+      expect(() => aside.smallScreenAsideHandler()).not.toThrow();
+      const button = document.querySelector('.small-screen-aside-Btn');
       expect(button).toBeNull();
     });
   });
@@ -310,27 +310,27 @@ describe('AsideBar', () => {
     });
 
     it('should stop propagation and toggle classes when aside-bar is clicked', () => {
-      const asideBarEl = document.querySelector('.aside-bar');
+      const asideEl = document.querySelector('.aside-bar');
       const hamImg = document.querySelector('.ham-img');
 
       hamImg.src = 'initial.png';
 
-      asideBar.asideContainerHandler();
+      aside.asideContainerHandler();
 
       const clickEvent = new Event('click', { bubbles: true });
       const stopSpy = vi.spyOn(clickEvent, 'stopPropagation');
 
-      asideBarEl.dispatchEvent(clickEvent);
+      asideEl.dispatchEvent(clickEvent);
 
       expect(stopSpy).toHaveBeenCalled();
-      expect(asideBarEl.classList.contains('aside-bar')).toBe(true);
-      expect(asideBarEl.classList.contains('small-aside-bar')).toBe(false);
+      expect(asideEl.classList.contains('aside-bar')).toBe(true);
+      expect(asideEl.classList.contains('small-aside-bar')).toBe(false);
       expect(hamImg.src).toMatch(/image\/svg\+xml/);
     });
 
     it('should stop propagation when aside-container is clicked', () => {
       const asideContainer = document.querySelector('.aside-container');
-      asideBar.asideContainerHandler();
+      aside.asideContainerHandler();
 
       const clickEvent = new Event('click', { bubbles: true });
       const stopSpy = vi.spyOn(clickEvent, 'stopPropagation');
@@ -341,17 +341,17 @@ describe('AsideBar', () => {
 
     it('should do nothing if .aside-bar does not exist', () => {
       document.querySelector('.aside-bar').remove();
-      expect(() => asideBar.asideContainerHandler()).not.toThrow();
+      expect(() => aside.asideContainerHandler()).not.toThrow();
     });
 
     it('should not fail if .aside-container does not exist', () => {
       document.querySelector('.aside-container').remove();
-      expect(() => asideBar.asideContainerHandler()).not.toThrow();
+      expect(() => aside.asideContainerHandler()).not.toThrow();
     });
 
     it('should not fail if .ham-img does not exist', () => {
       document.querySelector('.ham-img').remove();
-      expect(() => asideBar.asideContainerHandler()).not.toThrow();
+      expect(() => aside.asideContainerHandler()).not.toThrow();
     });
   });
 });

@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import UtilityModule from '../js-components/UtilityModule.js';
-import RenderUI from '../js-components/RenderUI.js';
-import TrackerStore from '../js-components/TrackerStore.js';
+import RenderBasicUI from '../js-components/RenderBasicUI.js';
+import BookStore from '../js-components/BookStore.js';
 
-let renderUI, rootDiv;
+let renderBasicUI, rootDiv;
 
 beforeEach(() => {
   document.body.innerHTML = `<div id="root"><div class="form-container hidden first-load-hidden-form"></div></div>`;
   UtilityModule.rootDiv = document.querySelector('#root');
   rootDiv = UtilityModule.rootDiv;
-  renderUI = new RenderUI();
+  renderBasicUI = new RenderBasicUI();
 });
 
-describe('RenderUI.js', () => {
+describe('RenderBasicUI.js', () => {
   describe('constructor', () => {
     it('should create a <main> tag', () => {
       const main = rootDiv.querySelector('main');
@@ -21,14 +21,16 @@ describe('RenderUI.js', () => {
     });
 
     it('should create book-create-delete-section inside <main>', () => {
-      const section = rootDiv.querySelector('section.book-create-delete-section');
+      const section = rootDiv.querySelector(
+        'section.book-create-delete-section'
+      );
       expect(section).toBeTruthy();
     });
   });
 
   describe('createTrackerHandler()', () => {
     it('should reveal the form container when Create button is clicked', () => {
-      renderUI.createTrackerHandler();
+      renderBasicUI.createTrackerHandler();
 
       const createBtn = document.createElement('button');
       createBtn.classList.add('create-book');
@@ -51,7 +53,7 @@ describe('RenderUI.js', () => {
 
   describe('mainHeading()', () => {
     it('should add an <h1> with correct text and class', () => {
-      renderUI.mainHeading();
+      renderBasicUI.mainHeading();
 
       const heading = rootDiv.querySelector('h1.main-heading');
       expect(heading).toBeTruthy();
@@ -65,10 +67,10 @@ describe('RenderUI.js', () => {
       const renderMock = vi.fn();
       const deleteMock = vi.fn();
 
-      TrackerStore.storedBooks = [{ bookId: 1, bookName: 'Book 1' }];
-      TrackerStore.deleteAllBook = deleteMock;
+      BookStore.storedBooks = [{ bookId: 1, bookName: 'Book 1' }];
+      BookStore.deleteAllBook = deleteMock;
 
-      renderUI.deleteAllTrackerHandle({ renderBooks: renderMock });
+      renderBasicUI.deleteAllTrackerHandle({ renderBooks: renderMock });
 
       const deleteBtn = document.createElement('button');
       deleteBtn.classList.add('delete-all-books');
@@ -82,14 +84,14 @@ describe('RenderUI.js', () => {
       expect(activitySpy).toHaveBeenCalledWith(
         'Your Book Tracker is now empty'
       );
-      expect(TrackerStore.storedBooks).toEqual([]);
+      expect(BookStore.storedBooks).toEqual([]);
     });
 
     it('should show warning if no books are present in store', () => {
       const activitySpy = vi.spyOn(UtilityModule, 'activityMsg');
-      TrackerStore.storedBooks = [];
+      BookStore.storedBooks = [];
 
-      renderUI.deleteAllTrackerHandle({ renderBooks: vi.fn() });
+      renderBasicUI.deleteAllTrackerHandle({ renderBooks: vi.fn() });
 
       const deleteBtn = document.createElement('button');
       deleteBtn.classList.add('delete-all-books');
@@ -105,7 +107,7 @@ describe('RenderUI.js', () => {
 
   describe('bookCreateAndDeleteBtns()', () => {
     it('should create wrapper, delete and create buttons with correct structure', () => {
-      renderUI.bookCreateAndDeleteBtns();
+      renderBasicUI.bookCreateAndDeleteBtns();
 
       const btnWrapper = rootDiv.querySelector('.create-read-btn-wrapper');
       expect(btnWrapper).toBeTruthy();

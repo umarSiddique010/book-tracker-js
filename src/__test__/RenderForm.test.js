@@ -1,24 +1,27 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import CreateInput from '../js-components/CreateInput.js';
+import RenderForm from '../js-components/RenderForm.js';
 import UtilityModule from '../js-components/UtilityModule.js';
-import { bookInputFields, bookFormDropDowns } from '../js-components/data/bookFormInputsData.js';
+import {
+  bookInputFields,
+  bookFormDropDowns,
+} from '../js-components/data/inputAttributesData.js';
 
 let rootDiv,
-  createInput = null;
+  renderForm = null;
 beforeEach(() => {
   document.body.innerHTML = `<div id="root"></div>`;
   UtilityModule.rootDiv = document.querySelector('#root');
   rootDiv = UtilityModule.rootDiv;
-  createInput = new CreateInput();
+  renderForm = new RenderForm();
 });
 
-describe('CreateInput', () => {
+describe('RenderForm', () => {
   describe('renderBookForm()', () => {
     it('throws if fields data is invalid', () => {
       const backup = [...bookInputFields];
       bookInputFields.length = 0;
 
-      expect(() => createInput.renderBookForm()).toThrowError(
+      expect(() => renderForm.renderBookForm()).toThrowError(
         'fields data is missing or Invalid'
       );
 
@@ -29,7 +32,7 @@ describe('CreateInput', () => {
       const backup = [...bookFormDropDowns];
       bookFormDropDowns.length = 0;
 
-      expect(() => createInput.renderBookForm()).toThrowError(
+      expect(() => renderForm.renderBookForm()).toThrowError(
         'dropDowns data is missing or invalid'
       );
 
@@ -37,7 +40,7 @@ describe('CreateInput', () => {
     });
 
     it('creates .form-container inside #root with .hidden and .first-load-hidden-form', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       const container = document.querySelector('.form-container');
       expect(container).not.toBeNull();
@@ -47,7 +50,7 @@ describe('CreateInput', () => {
     });
 
     it('creates a form with id="form" inside .form-container', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       const form = document.querySelector('.form-container form');
       expect(form).not.toBeNull();
@@ -55,7 +58,7 @@ describe('CreateInput', () => {
     });
 
     it('creates close-form button and image inside form', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       const closeBtn = document.querySelector('.close-form-btn');
       expect(closeBtn).not.toBeNull();
@@ -67,7 +70,7 @@ describe('CreateInput', () => {
     });
 
     it('renders all input fields from fields[]', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       bookInputFields.forEach(({ id, placeholder, type }) => {
         const input = document.getElementById(id);
@@ -78,7 +81,7 @@ describe('CreateInput', () => {
     });
 
     it('renders all dropdowns from dropDowns[] with options', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       bookFormDropDowns.forEach(({ id, options }) => {
         const select = document.getElementById(id);
@@ -95,7 +98,7 @@ describe('CreateInput', () => {
     });
 
     it('adds a submit button with id="submitBtn" and text "Add book"', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
 
       const btn = document.getElementById('submitBtn');
       expect(btn).not.toBeNull();
@@ -104,22 +107,22 @@ describe('CreateInput', () => {
     });
 
     it('calls inputFields() for each field in renderBookForm()', () => {
-      const spy = vi.spyOn(createInput, 'inputFields');
-      createInput.renderBookForm();
+      const spy = vi.spyOn(renderForm, 'inputFields');
+      renderForm.renderBookForm();
       expect(spy).toHaveBeenCalledTimes(bookInputFields.length);
       spy.mockRestore();
     });
 
     it('calls dropDownFields() for each dropdown in renderBookForm()', () => {
-      const spy = vi.spyOn(createInput, 'dropDownFields');
-      createInput.renderBookForm();
+      const spy = vi.spyOn(renderForm, 'dropDownFields');
+      renderForm.renderBookForm();
       expect(spy).toHaveBeenCalledTimes(bookFormDropDowns.length);
       spy.mockRestore();
     });
 
     it('calls inputSubmitBtn() exactly once in renderBookForm()', () => {
-      const spy = vi.spyOn(createInput, 'inputSubmitBtn');
-      createInput.renderBookForm();
+      const spy = vi.spyOn(renderForm, 'inputSubmitBtn');
+      renderForm.renderBookForm();
       expect(spy).toHaveBeenCalledTimes(1);
       spy.mockRestore();
     });
@@ -130,7 +133,7 @@ describe('CreateInput', () => {
       const dummyForm = document.createElement('form');
       rootDiv.appendChild(dummyForm);
 
-      createInput.inputSubmitBtn(dummyForm);
+      renderForm.inputSubmitBtn(dummyForm);
 
       const wrapper = dummyForm.querySelector('.create-btn-wrapper');
       expect(wrapper).not.toBeNull();
@@ -154,7 +157,7 @@ describe('CreateInput', () => {
         type: 'text',
       };
 
-      createInput.inputFields(field, dummyForm);
+      renderForm.inputFields(field, dummyForm);
 
       const wrapper = dummyForm.querySelector('.field-wrapper');
       expect(wrapper).not.toBeNull();
@@ -186,7 +189,7 @@ describe('CreateInput', () => {
         options: ['Yes', 'No'],
       };
 
-      createInput.dropDownFields(dropDown, dummyForm);
+      renderForm.dropDownFields(dropDown, dummyForm);
 
       const wrapper = dummyForm.querySelector('.dropdown-wrapper');
       expect(wrapper).not.toBeNull();
@@ -219,11 +222,11 @@ describe('CreateInput', () => {
 
   describe('stopFormPropagation()', () => {
     it('adds a click event listener to #form that stops propagation', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
       const form = document.getElementById('form');
       const stopPropagationSpy = vi.fn();
 
-      createInput.stopFormPropagation();
+      renderForm.stopFormPropagation();
 
       const clickEvent = new MouseEvent('click', { bubbles: true });
       Object.defineProperty(clickEvent, 'stopPropagation', {
@@ -238,17 +241,17 @@ describe('CreateInput', () => {
       const form = document.getElementById('form');
       if (form) form.remove();
 
-      expect(() => createInput.stopFormPropagation()).not.toThrow();
+      expect(() => renderForm.stopFormPropagation()).not.toThrow();
     });
   });
 
   describe('formContainerHandler()', () => {
     it('adds click listener to .form-container that hides it and calls stopFormPropagation()', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
       const formCont = document.querySelector('.form-container');
-      const stopSpy = vi.spyOn(createInput, 'stopFormPropagation');
+      const stopSpy = vi.spyOn(renderForm, 'stopFormPropagation');
 
-      createInput.formContainerHandler();
+      renderForm.formContainerHandler();
 
       const clickEvent = new MouseEvent('click', {
         bubbles: true,
@@ -265,12 +268,12 @@ describe('CreateInput', () => {
 
   describe('formElementCloseHandler()', () => {
     it('adds click listener to .close-form-btn that hides .form-container and calls stopFormPropagation()', () => {
-      createInput.renderBookForm();
+      renderForm.renderBookForm();
       const closeBtn = document.querySelector('.close-form-btn');
       const formCont = document.querySelector('.form-container');
-      const stopSpy = vi.spyOn(createInput, 'stopFormPropagation');
+      const stopSpy = vi.spyOn(renderForm, 'stopFormPropagation');
 
-      createInput.formElementCloseHandler();
+      renderForm.formElementCloseHandler();
       const clickEvent = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,

@@ -1,17 +1,17 @@
 import { expect, it, describe, beforeEach, vi } from 'vitest';
-import TrackerStore from '../js-components/TrackerStore.js';
+import BookStore from '../js-components/BookStore.js';
 
 beforeEach(() => {
   localStorage.clear();
 });
 
-describe('TrackerStore', () => {
+describe('BookStore', () => {
   it('should be defined', () => {
-    expect(TrackerStore).toBeDefined();
+    expect(BookStore).toBeDefined();
   });
 
-  describe('TrackerStore.saveBook()', () => {
-    TrackerStore.storedBooks = [
+  describe('BookStore.saveBook()', () => {
+    BookStore.storedBooks = [
       {
         bookId: 1,
         authorName: 'John Doe',
@@ -22,7 +22,7 @@ describe('TrackerStore', () => {
     ];
 
     it('should save a book by saveBook()', () => {
-      TrackerStore.storedBooks.push({
+      BookStore.storedBooks.push({
         bookId: 2,
         authorName: 'Laura Doe',
         bookName: 'The Beautiful Gatsby',
@@ -31,17 +31,17 @@ describe('TrackerStore', () => {
       });
 
       const setItem = vi.spyOn(localStorage.__proto__, 'setItem');
-      TrackerStore.saveBook();
+      BookStore.saveBook();
       expect(localStorage.getItem('savedLocalBooks')).not.toBeUndefined();
       expect(setItem).toHaveBeenCalledWith(
         'savedLocalBooks',
-        JSON.stringify(TrackerStore.storedBooks)
+        JSON.stringify(BookStore.storedBooks)
       );
-      expect(TrackerStore.storedBooks.length).toBe(2);
+      expect(BookStore.storedBooks.length).toBe(2);
     });
 
     it('should check if the object is defined in the local storage with correct data type', () => {
-      TrackerStore.storedBooks.forEach((book) => {
+      BookStore.storedBooks.forEach((book) => {
         expect(typeof book).toBe('object');
         expect(typeof book.bookId).toBe('number');
         expect(typeof book.authorName).toBe('string');
@@ -52,10 +52,10 @@ describe('TrackerStore', () => {
     });
 
     it('should delete all book by deleteAllBook()', () => {
-      TrackerStore.saveBook();
-      TrackerStore.deleteAllBook();
+      BookStore.saveBook();
+      BookStore.deleteAllBook();
       expect(localStorage.getItem('savedLocalBooks')).toBeNull();
-      expect(TrackerStore.storedBooks.length).toBe(0);
+      expect(BookStore.storedBooks.length).toBe(0);
     });
   });
 });

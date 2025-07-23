@@ -1,8 +1,8 @@
 import closeBtn from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
-import { bookInputFields, bookFormDropDowns } from './data/bookFormInputsData.js';
+import { bookInputFields, bookFormDropDowns } from './data/inputAttributesData.js';
 
-export default class CreateInput {
+export default class RenderForm{
   renderBookForm() {
     if (!Array.isArray(bookInputFields) || bookInputFields.length <= 0) {
       throw new Error('fields data is missing or Invalid');

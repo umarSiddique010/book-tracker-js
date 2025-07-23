@@ -1,8 +1,8 @@
 import UtilityModule from './UtilityModule.js';
-import TrackerStore from './TrackerStore.js';
+import BookStore from './BookStore.js';
 import CreateIcon from '../asset/create.png';
 import DeleteAllIcon from '../asset/delete-folder.png';
-export default class RenderUI {
+export default class RenderBasicUI {
   constructor() {
     this.mainTag = UtilityModule.createElement(
       'main',
@@ -35,11 +35,11 @@ export default class RenderUI {
       const deleteAllBtn = e.target.closest('.delete-all-books');
 
       if (deleteAllBtn) {
-        if (TrackerStore.storedBooks.length <= 0) {
+        if (BookStore.storedBooks.length <= 0) {
           UtilityModule.activityMsg('Your Book Tracker is already empty');
         } else {
-          TrackerStore.deleteAllBook();
-          TrackerStore.storedBooks = [];
+          BookStore.deleteAllBook();
+          BookStore.storedBooks = [];
           renderTracker.renderBooks();
           UtilityModule.activityMsg('Your Book Tracker is now empty');
         }

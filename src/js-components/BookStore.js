@@ -1,4 +1,4 @@
-export default class TrackerStore {
+export default class BookStore {
   static storedBooks =
     JSON.parse(localStorage.getItem('savedLocalBooks')) || [];
 

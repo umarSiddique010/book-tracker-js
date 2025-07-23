@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import {
   asideDoneReading,
   asideYetToRead,
-} from '../js-components/data/asideBarElementsData.js';
+} from '../js-components/data/asideElementsData.js';
 
-describe('asideBarElementsData.js', () => {
+describe('asideElementsData.js', () => {
   describe('asideDoneReading', () => {
     it('should be an array with correct heading and box objects', () => {
       expect(asideDoneReading).toHaveLength(2);

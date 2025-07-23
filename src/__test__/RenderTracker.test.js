@@ -1,28 +1,28 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import UtilityModule from '../js-components/UtilityModule.js';
 import RenderTracker from '../js-components/RenderTracker.js';
-import TrackerState from '../js-components/TrackerState.js';
-import RenderUI from '../js-components/RenderUI.js';
-import AsideBar from '../js-components/AsideBar.js';
-import TrackerStore from '../js-components/TrackerStore.js';
+import BookStateManagement from '../js-components/BookStateManagement.js';
+import RenderBasicUI from '../js-components/RenderBasicUI.js';
+import Aside from '../js-components/Aside.js';
+import BookStore from '../js-components/BookStore.js';
 import { waitFor } from '@testing-library/dom';
 
 let rootDiv,
   renderTracker,
-  trackerState,
-  renderUI,
-  asideBar = null;
+  bookStateManagement,
+  renderBasicUI,
+  aside = null;
 
 beforeEach(() => {
-  TrackerStore.deleteAllBook();
+  BookStore.deleteAllBook();
   localStorage.clear();
   document.body.innerHTML = `<div id="div"></div>`;
   UtilityModule.rootDiv = document.querySelector('#div');
 
-  trackerState = new TrackerState();
-  renderUI = new RenderUI();
-  asideBar = new AsideBar();
-  renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
+  bookStateManagement = new BookStateManagement();
+  renderBasicUI = new RenderBasicUI();
+  aside = new Aside();
+  renderTracker = new RenderTracker(bookStateManagement, renderBasicUI, aside);
 
   renderTracker.renderBooks();
 
@@ -33,28 +33,36 @@ beforeEach(() => {
 describe('RenderTracker.js', () => {
   describe('constructor', () => {
     it('should create a new instance of RenderTracker', () => {
-      expect(renderTracker.trackerState).toBeInstanceOf(TrackerState);
-      expect(renderTracker.renderUI).toBeInstanceOf(RenderUI);
-      expect(renderTracker.asideBar).toBeInstanceOf(AsideBar);
+      expect(renderTracker.bookStateManagement).toBeInstanceOf(
+        BookStateManagement
+      );
+      expect(renderTracker.renderBasicUI).toBeInstanceOf(RenderBasicUI);
+      expect(renderTracker.aside).toBeInstanceOf(Aside);
       expect(renderTracker.trackerSection).toBeInstanceOf(HTMLElement);
       const trackerSection = renderTracker.trackerSection;
       expect(trackerSection.classList.contains('tracker-section')).toBe(true);
-      expect(renderTracker.renderUI.mainTag.contains(trackerSection)).toBe(
+      expect(renderTracker.renderBasicUI.mainTag.contains(trackerSection)).toBe(
         true
       );
     });
   });
   describe('renderBooks', () => {
     beforeEach(() => {
-      TrackerStore.deleteAllBook();
-      trackerState.storeBooks(
+      BookStore.deleteAllBook();
+      bookStateManagement.storeBooks(
         12345678910,
         'John Doe',
         'The Great Gatsby',
         299,
         'No'
       );
-      trackerState.storeBooks(12345678911, 'Tolkien', 'The Hobbit', 295, 'No');
+      bookStateManagement.storeBooks(
+        12345678911,
+        'Tolkien',
+        'The Hobbit',
+        295,
+        'No'
+      );
       renderTracker.renderBooks();
     });
 
@@ -94,9 +102,9 @@ describe('RenderTracker.js', () => {
       );
     });
 
-    it('should call asideBar.appendDoneReading and appendYetToRead', () => {
-      const spyDone = vi.spyOn(asideBar, 'appendDoneReading');
-      const spyYet = vi.spyOn(asideBar, 'appendYetToRead');
+    it('should call aside.appendDoneReading and aside.appendYetToRead', () => {
+      const spyDone = vi.spyOn(aside, 'appendDoneReading');
+      const spyYet = vi.spyOn(aside, 'appendYetToRead');
       renderTracker.renderBooks();
       expect(spyDone).toHaveBeenCalled();
       expect(spyYet).toHaveBeenCalled();
@@ -220,15 +228,15 @@ describe('RenderTracker.js', () => {
 
   describe('attachEditAndDoneHandler', () => {
     beforeEach(() => {
-      TrackerStore.deleteAllBook();
-      trackerState.storeBooks(
+      BookStore.deleteAllBook();
+      bookStateManagement.storeBooks(
         '12345678910',
         'John Doe',
         'The Great Gatsby',
         299,
         'No'
       );
-      trackerState.storeBooks(
+      bookStateManagement.storeBooks(
         '12345678911',
         'Tolkien',
         'The Hobbit',
@@ -290,15 +298,15 @@ describe('RenderTracker.js', () => {
 
   describe('attachDeleteBookHandler', () => {
     beforeEach(() => {
-      TrackerStore.deleteAllBook();
-      trackerState.storeBooks(
+      BookStore.deleteAllBook();
+      bookStateManagement.storeBooks(
         '12345678910',
         'John Doe',
         'The Great Gatsby',
         299,
         'No'
       );
-      trackerState.storeBooks(
+      bookStateManagement.storeBooks(
         '12345678911',
         'Tolkien',
         'The Hobbit',
@@ -310,7 +318,7 @@ describe('RenderTracker.js', () => {
       renderTracker.attachDeleteBookHandler();
     });
 
-    it('should delete the correct book from DOM and TrackerStore and show activity msg', async () => {
+    it('should delete the correct book from DOM and BookStore and show activity msg', async () => {
       const allWrappersBefore = rootDiv.querySelectorAll('.tracker-wrapper');
 
       expect(allWrappersBefore.length).toBe(2);

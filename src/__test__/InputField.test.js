@@ -1,44 +1,46 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import RenderInput from '../js-components/RenderInput.js';
-import TrackerState from '../js-components/TrackerState.js';
+import InputField from '../js-components/InputField.js';
+import BookStateManagement from '../js-components/BookStateManagement.js';
 import RenderTracker from '../js-components/RenderTracker.js';
 import UtilityModule from '../js-components/UtilityModule.js';
-import RenderUI from '../js-components/RenderUI.js';
-import AsideBar from '../js-components/AsideBar.js';
-import CreateInput from '../js-components/CreateInput.js';
+import RenderBasicUI from '../js-components/RenderBasicUI.js';
+import Aside from '../js-components/Aside.js';
+import RenderForm from '../js-components/RenderForm.js';
 
 let rootDiv,
-  renderInput,
-  trackerState,
+  inputField,
+  bookStateManagement,
   renderTracker,
-  renderUI,
-  asideBar,
-  createInput = null;
+  renderBasicUI,
+  aside,
+  renderForm = null;
 
 beforeEach(() => {
   document.body.innerHTML = `<div id="root"></div>`;
   UtilityModule.rootDiv = document.querySelector('#root');
   rootDiv = UtilityModule.rootDiv;
-  trackerState = new TrackerState();
-  renderUI = new RenderUI();
-  asideBar = new AsideBar();
-  renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
-  renderInput = new RenderInput(trackerState, renderTracker);
-  createInput = new CreateInput();
+  bookStateManagement = new BookStateManagement();
+  renderBasicUI = new RenderBasicUI();
+  aside = new Aside();
+  renderTracker = new RenderTracker(bookStateManagement, renderBasicUI, aside);
+  inputField = new InputField(bookStateManagement, renderTracker);
+  renderForm = new RenderForm();
 });
 
-describe('RenderInput', () => {
+describe('InputField', () => {
   beforeEach(() => {
-    createInput.renderBookForm();
+    renderForm.renderBookForm();
   });
 
   describe('constructor', () => {
-    it('should create an instance of trackerState', () => {
-      expect(renderInput.trackerState).toBeInstanceOf(TrackerState);
+    it('should create an instance of bookStateManagement', () => {
+      expect(inputField.bookStateManagement).toBeInstanceOf(
+        BookStateManagement
+      );
     });
 
     it('should create an instance of renderTracker', () => {
-      expect(renderInput.renderTracker).toBeInstanceOf(RenderTracker);
+      expect(inputField.renderTracker).toBeInstanceOf(RenderTracker);
     });
   });
 
@@ -46,16 +48,16 @@ describe('RenderInput', () => {
     let spyActivityMsg, spyStoreBooks, spyRenderBooks;
 
     beforeEach(() => {
-      renderInput.initializeForm();
+      inputField.initializeForm();
 
       spyActivityMsg = vi
         .spyOn(UtilityModule, 'activityMsg')
         .mockImplementation(() => {});
       spyStoreBooks = vi
-        .spyOn(renderInput.trackerState, 'storeBooks')
+        .spyOn(inputField.bookStateManagement, 'storeBooks')
         .mockImplementation(() => {});
       spyRenderBooks = vi
-        .spyOn(renderInput.renderTracker, 'renderBooks')
+        .spyOn(inputField.renderTracker, 'renderBooks')
         .mockImplementation(() => {});
     });
 
@@ -141,7 +143,7 @@ describe('RenderInput', () => {
       pageNumber.value = '328';
       haveRead.value = 'No';
 
-      renderInput.resetForm();
+      inputField.resetForm();
 
       expect(bookName.value).toBe('');
       expect(authorName.value).toBe('');

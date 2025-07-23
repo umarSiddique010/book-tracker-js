@@ -1,39 +1,39 @@
-import CreateInput from './js-components/CreateInput.js';
-import RenderUI from './js-components/RenderUI.js';
-import AsideBar from './js-components/AsideBar.js';
-import TrackerState from './js-components/TrackerState.js';
+import RenderForm from './js-components/RenderForm.js';
+import RenderBasicUI from './js-components/RenderBasicUI.js';
+import Aside from './js-components/Aside.js';
+import BookStateManagement from './js-components/BookStateManagement.js';
 import RenderTracker from './js-components/RenderTracker.js';
-import RenderInput from './js-components/RenderInput.js';
+import InputField from './js-components/InputField.js';
 import './style.css';
 
-const trackerState = new TrackerState();
-const asideBar = new AsideBar();
-const renderUI = new RenderUI();
-const createInput = new CreateInput(renderUI);
-const renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
-const renderInput = new RenderInput(trackerState, renderTracker);
+const bookStateManagement = new BookStateManagement();
+const aside = new Aside();
+const renderBasicUI = new RenderBasicUI();
+const renderForm = new RenderForm(renderBasicUI);
+const renderTracker = new RenderTracker(bookStateManagement, renderBasicUI, aside);
+const inputField = new InputField(bookStateManagement, renderTracker);
 
 document.addEventListener('DOMContentLoaded', () => {
   // Directly inside root div
-  createInput.renderBookForm();
-  createInput.formContainerHandler();
-  createInput.formElementCloseHandler();
+  renderForm.renderBookForm();
+  renderForm.formContainerHandler();
+  renderForm.formElementCloseHandler();
   // rendering aside bar
-  asideBar.doneReading();
-  asideBar.yetToRead();
-  asideBar.smallScreenAsideBar();
-  asideBar.smallScreenAsideHandler();
-  asideBar.asideContainerHandler();
+  aside.doneReading();
+  aside.yetToRead();
+  aside.smallScreenAside();
+  aside.smallScreenAsideHandler();
+  aside.asideContainerHandler();
 
   // inside main
-  renderUI.mainHeading();
-  renderUI.bookCreateAndDeleteBtns();
+  renderBasicUI.mainHeading();
+  renderBasicUI.bookCreateAndDeleteBtns();
   // Create and Delete all section
 
-  renderUI.createTrackerHandler();
-  renderUI.deleteAllTrackerHandle(renderTracker);
+  renderBasicUI.createTrackerHandler();
+  renderBasicUI.deleteAllTrackerHandle(renderTracker);
 
-  renderInput.initializeForm();
+  inputField.initializeForm();
   renderTracker.renderBooks();
   renderTracker.attachEditAndDoneHandler();
   renderTracker.attachDeleteBookHandler();

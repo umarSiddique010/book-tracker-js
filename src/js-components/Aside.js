@@ -1,13 +1,13 @@
 import hamburgerMenu from '../asset/hamburger-menu.svg';
 import closeHamburger from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
-import TrackerStore from './TrackerStore.js';
+import BookStore from './BookStore.js';
 import {
   asideDoneReading,
   asideYetToRead,
-} from './data/asideBarElementsData.js';
+} from './data/asideElementsData.js';
 
-export default class AsideBar {
+export default class Aside {
   constructor() {
     this.aside = UtilityModule.createElement(
       'aside',
@@ -67,7 +67,7 @@ export default class AsideBar {
       doneReadingBox.innerHTML = '';
     }
 
-    TrackerStore.storedBooks.forEach(
+    BookStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
         if (haveRead === 'Yes') {
           const bookNameAnchor = UtilityModule.createElement(
@@ -89,7 +89,7 @@ export default class AsideBar {
 
     yetToReadBox.innerHTML = '';
 
-    TrackerStore.storedBooks.forEach(
+    BookStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
         if (haveRead === 'No') {
           const bookNameAnchor = UtilityModule.createElement(
@@ -104,12 +104,12 @@ export default class AsideBar {
     );
   }
 
-  smallScreenAsideBar() {
+  smallScreenAside() {
     const smallScreenAsideBtn = UtilityModule.createElement(
       'button',
       UtilityModule.rootDiv,
       null,
-      'small--screen-aside-Btn'
+      'small-screen-aside-Btn'
     );
     const hamImg = UtilityModule.createElement(
       'img',
@@ -122,34 +122,34 @@ export default class AsideBar {
 
   smallScreenAsideHandler() {
     const hamImg = document.querySelector('.ham-img');
-    const asideBar = document.querySelector('.aside-bar');
-    const btn = document.querySelector('.small--screen-aside-Btn');
+    const aside = document.querySelector('.aside-bar');
+    const btn = document.querySelector('.small-screen-aside-Btn');
 
-    if (!hamImg || !asideBar || !btn) return;
+    if (!hamImg || !aside || !btn) return;
 
     btn.addEventListener('click', () => {
-      if (asideBar.classList.contains('aside-bar')) {
-        asideBar.classList.remove('aside-bar');
-        asideBar.classList.add('small-aside-bar');
+      if (aside.classList.contains('aside-bar')) {
+        aside.classList.remove('aside-bar');
+        aside.classList.add('small-aside-bar');
         hamImg.src = closeHamburger;
       } else {
-        asideBar.classList.add('aside-bar');
-        asideBar.classList.remove('small-aside-bar');
+        aside.classList.add('aside-bar');
+        aside.classList.remove('small-aside-bar');
         hamImg.src = hamburgerMenu;
       }
     });
   }
 
   asideContainerHandler() {
-    const asideBar = document.querySelector('.aside-bar');
+    const aside = document.querySelector('.aside-bar');
     const asideContainer = document.querySelector('.aside-container');
     const hamImg = document.querySelector('.ham-img');
 
-    if (asideBar) {
-      asideBar.addEventListener('click', (e) => {
+    if (aside) {
+      aside.addEventListener('click', (e) => {
         e.stopPropagation();
-        asideBar.classList.add('aside-bar');
-        asideBar.classList.remove('small-aside-bar');
+        aside.classList.add('aside-bar');
+        aside.classList.remove('small-aside-bar');
         hamImg.src = hamburgerMenu;
       });
     }

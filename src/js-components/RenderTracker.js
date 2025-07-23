@@ -1,17 +1,17 @@
-import TrackerStore from './TrackerStore.js';
+import BookStore from './BookStore.js';
 import UtilityModule from './UtilityModule.js';
 import DeleteIcon from '../asset/delete.png';
 import EditIcon from '../asset/edit.png';
 import DoneIcon from '../asset/tick.png';
 
 export default class RenderTracker {
-  constructor(trackerState, renderUI, asideBar) {
-    this.trackerState = trackerState;
-    this.renderUI = renderUI;
-    this.asideBar = asideBar;
+  constructor(bookStateManagement, renderBasicUI, aside) {
+    this.bookStateManagement = bookStateManagement;
+    this.renderBasicUI = renderBasicUI;
+    this.aside = aside;
     this.trackerSection = UtilityModule.createElement(
       'section',
-      this.renderUI.mainTag,
+      this.renderBasicUI.mainTag,
       null,
       'tracker-section'
     );
@@ -29,7 +29,7 @@ export default class RenderTracker {
       'tracker-container'
     );
 
-    TrackerStore.storedBooks.forEach(
+    BookStore.storedBooks.forEach(
       ({ bookId, authorName, bookName, pageNumber, haveRead }) => {
         this.renderBooksElements(
           trackerContainer,
@@ -42,8 +42,8 @@ export default class RenderTracker {
       }
     );
 
-    this.asideBar.appendDoneReading();
-    this.asideBar.appendYetToRead();
+    this.aside.appendDoneReading();
+    this.aside.appendYetToRead();
   }
 
   renderBooksElements(
@@ -181,7 +181,7 @@ export default class RenderTracker {
         if (!readDropdown) return;
 
         const readValue = this.capitalizeEditValue(readDropdown.value);
-        await this.trackerState.editRead(readValue, getBookId);
+        await this.bookStateManagement.editRead(readValue, getBookId);
         readPara.innerHTML = `${readValue}`;
         doneBtn.innerHTML = `
         <img src="${EditIcon}" alt="edit" class="edit-icon">
@@ -207,7 +207,7 @@ export default class RenderTracker {
 
         const getBookId = Number(trackerWrapper.getAttribute('id'));
 
-        this.trackerState.deleteBook(getBookId);
+        this.bookStateManagement.deleteBook(getBookId);
         this.renderBooks();
         UtilityModule.activityMsg(
           `"${bookName}" book been successfully removed from Tracker`
