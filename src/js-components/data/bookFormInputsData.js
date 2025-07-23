@@ -1,4 +1,4 @@
-export const fields = [
+export const bookInputFields = [
   {
     label: 'Enter book name:',
     id: 'bookName',
@@ -21,7 +21,7 @@ export const fields = [
   },
 ];
 
-export const dropDowns = [
+export const bookFormDropDowns = [
   {
     label: 'Have you read?',
     id: 'haveRead',

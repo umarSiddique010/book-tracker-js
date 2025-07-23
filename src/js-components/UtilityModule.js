@@ -33,12 +33,12 @@ export default class UtilityModule {
       null,
       'activity-close-btn'
     );
-
+    
     this.createElement('div', msgBox, null, 'activity-progress-bar');
-
+    
     const closeImg = this.createElement('img', closeBtn, null, null);
     closeImg.src = CloseImg;
-
+    
     this.createElement('p', msgBox, message, 'msg-para');
 
     closeBtn.addEventListener('click', () => msgBox.remove());

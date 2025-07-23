@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   asideDoneReading,
   asideYetToRead,
-} from '../js-components/data/asideBarElementsData';
+} from '../js-components/data/asideBarElementsData.js';
 
 describe('asideBarElementsData.js', () => {
   describe('asideDoneReading', () => {

@@ -15,7 +15,7 @@ A fully modular, real-DOM-based **Book Tracker SPA** built with **vanilla JavaSc
 
 ## Live Demo
 
-[View Live Application](https://umarsiddique010.github.io/book-tracker-app-js/) | [Source Code](https://github.com/umarSiddique010/book-tracker-app-js)
+[View Live Application](https://umarsiddique010.github.io/book-tracker-js/) | [Source Code](https://github.com/umarSiddique010/book-tracker-js)
 
 ---
 
@@ -142,7 +142,7 @@ Tests are written to interact with the **real DOM**, including dynamic rendering
 ## Project Structure
 
 ```
-book-tracker-app-js/
+book-tracker-js/
 ├── package.json                    # Project metadata and dependencies
 ├── package-lock.json              # Dependency lock file
 ├── README.md                       # Project documentation
@@ -214,8 +214,8 @@ book-tracker-app-js/
 
 ```bash
 # Clone the repository
-git clone https://github.com/umarSiddique010/book-tracker-app-js
-cd book-tracker-app-js
+git clone https://github.com/umarSiddique010/book-tracker-js
+cd book-tracker-js
 
 # Install dependencies
 npm install

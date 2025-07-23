@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dosis:wght@200..800&family=Rubik+Dirt&display=swap');
 @import url('./css-components/inputForm.css');
 @import url('./css-components/asideBar.css');
-@import url('./css-components/bookCreateAndDeleteSection.css');
-@import url('./css-components/librarySection.css');
+@import url('./css-components/bookCreateDelete.css');
+@import url('./css-components/trackerSection.css');
 
 :root {
   --crudBarBg: #4040407d;
@@ -12,7 +12,7 @@
   --closeFormBtnBgColor: #424242;
   --submitBtnBgColor: #424242;
   --inputColor: #424242;
-  --libraryWrapperBg: #404d2267;
+  --trackerWrapperBg: #404d2267;
   --smallAsideBgColor: #0b0b0974;
   --asideTextColor: #ffffff;
   --bloodRedColor: #780606;

@@ -1,38 +1,38 @@
-import LibraryStore from './LibraryStore.js';
+import TrackerStore from './TrackerStore.js';
 import UtilityModule from './UtilityModule.js';
 import DeleteIcon from '../asset/delete.png';
 import EditIcon from '../asset/edit.png';
 import DoneIcon from '../asset/tick.png';
 
-export default class RenderLibrary {
-  constructor(libraryState, renderUI, asideBar) {
-    this.libraryState = libraryState;
+export default class RenderTracker {
+  constructor(trackerState, renderUI, asideBar) {
+    this.trackerState = trackerState;
     this.renderUI = renderUI;
     this.asideBar = asideBar;
-    this.librarySection = UtilityModule.createElement(
+    this.trackerSection = UtilityModule.createElement(
       'section',
       this.renderUI.mainTag,
       null,
-      'library-section'
+      'tracker-section'
     );
   }
 
   renderBooks() {
-    if (this.librarySection) {
-      this.librarySection.innerHTML = '';
+    if (this.trackerSection) {
+      this.trackerSection.innerHTML = '';
     }
 
-    const libraryContainer = UtilityModule.createElement(
+    const trackerContainer = UtilityModule.createElement(
       'div',
-      this.librarySection,
+      this.trackerSection,
       null,
-      'library-container'
+      'tracker-container'
     );
 
-    LibraryStore.storedBooks.forEach(
+    TrackerStore.storedBooks.forEach(
       ({ bookId, authorName, bookName, pageNumber, haveRead }) => {
         this.renderBooksElements(
-          libraryContainer,
+          trackerContainer,
           bookId,
           authorName,
           bookName,
@@ -47,46 +47,46 @@ export default class RenderLibrary {
   }
 
   renderBooksElements(
-    libraryContainer,
+    trackerContainer,
     bookId,
-    bookName,
     authorName,
+    bookName,
     pageNumber,
     haveRead
   ) {
-    const libraryWrapper = UtilityModule.createElement(
+    const trackerWrapper = UtilityModule.createElement(
       'div',
-      libraryContainer,
+      trackerContainer,
       null,
-      'library-wrapper'
+      'tracker-wrapper'
     );
 
-    libraryWrapper.setAttribute('id', `${bookId}`);
+    trackerWrapper.setAttribute('id', `${bookId}`);
 
     UtilityModule.createElement(
       'h2',
-      libraryWrapper,
+      trackerWrapper,
       `Book: ${bookName}`,
       'book-heading'
     );
 
     UtilityModule.createElement(
       'h3',
-      libraryWrapper,
+      trackerWrapper,
       `Author: ${authorName}`,
       'author-heading'
     );
 
     UtilityModule.createElement(
       'p',
-      libraryWrapper,
+      trackerWrapper,
       `Pages: ${pageNumber}`,
       'page-num-para'
     );
 
     const readPara = UtilityModule.createElement(
       'p',
-      libraryWrapper,
+      trackerWrapper,
       null,
       'read-para-box'
     );
@@ -95,7 +95,7 @@ export default class RenderLibrary {
 
     const editBtn = UtilityModule.createElement(
       'button',
-      libraryWrapper,
+      trackerWrapper,
       null,
       'edit-btn'
     );
@@ -112,7 +112,7 @@ export default class RenderLibrary {
 
     const deleteBtn = UtilityModule.createElement(
       'button',
-      libraryWrapper,
+      trackerWrapper,
       null,
       'delete-btn'
     );
@@ -132,10 +132,10 @@ export default class RenderLibrary {
     return haveRead.charAt(0).toUpperCase() + haveRead.slice(1).toLowerCase();
   }
 
-  successfulEditMsg(readValue, libraryWrapper) {
+  successfulEditMsg(readValue, trackerWrapper) {
     let message = [];
 
-    const bookName = libraryWrapper
+    const bookName = trackerWrapper
       .querySelector('.book-heading')
       .textContent.trim();
     if (readValue === 'Yes') {
@@ -153,18 +153,18 @@ export default class RenderLibrary {
   }
 
   attachEditAndDoneHandler() {
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
       const editBtn = e.target.closest('.edit-btn');
       const doneBtn = e.target.closest('.done-edit-btn');
 
       if (editBtn) {
-        const libraryWrapper = editBtn.closest('.library-wrapper');
-        const readPara = libraryWrapper.querySelector('.read-para');
+        const trackerWrapper = editBtn.closest('.tracker-wrapper');
+        const readPara = trackerWrapper.querySelector('.read-para');
 
-        readPara.contentEditable = 'true';
-        readPara.classList.add('highlight');
-
-        readPara.focus();
+        readPara.innerHTML = `<select class="read-dropdown">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        </select>`;
 
         editBtn.classList.add('done-edit-btn');
         editBtn.classList.remove('edit-btn');
@@ -172,28 +172,25 @@ export default class RenderLibrary {
         <img src="${DoneIcon}" alt="done" class="done-icon">
         `;
       } else if (doneBtn) {
-        const libraryWrapper = doneBtn.closest('.library-wrapper');
-        const getBookId = parseInt(libraryWrapper.getAttribute('id'), 10);
-        const readPara = libraryWrapper.querySelector('.read-para');
-        const haveRead = readPara.textContent.trim().toLowerCase();
+        const trackerWrapper = doneBtn.closest('.tracker-wrapper');
+        const getBookId = Number(trackerWrapper.getAttribute('id'));
+        const readDropdown = trackerWrapper.querySelector('.read-dropdown');
+        const readPara = trackerWrapper.querySelector('.read-para');
+        
 
-        if (!['yes', 'no'].includes(haveRead)) {
-          UtilityModule.activityMsg('Please enter "yes" or "no"');
-          return;
-        }
-        const readValue = this.capitalizeEditValue(haveRead);
-        this.libraryState.editRead(readValue, getBookId);
+        if (!readDropdown) return;
 
+        const readValue = this.capitalizeEditValue(readDropdown.value);
+        await this.trackerState.editRead(readValue, getBookId);
+        readPara.innerHTML = `${readValue}`;
         doneBtn.innerHTML = `
         <img src="${EditIcon}" alt="edit" class="edit-icon">
         `;
         doneBtn.classList.remove('done-edit-btn');
-        readPara.classList.remove('highlight');
-        readPara.contentEditable = 'false';
         doneBtn.classList.add('edit-btn');
 
         this.renderBooks();
-        this.successfulEditMsg(readValue, libraryWrapper);
+        this.successfulEditMsg(readValue, trackerWrapper);
       }
     });
   }
@@ -203,17 +200,17 @@ export default class RenderLibrary {
       const deleteBtn = e.target.closest('.delete-btn');
 
       if (deleteBtn) {
-        const libraryWrapper = deleteBtn.closest('.library-wrapper');
-        const bookName = libraryWrapper
+        const trackerWrapper = deleteBtn.closest('.tracker-wrapper');
+        const bookName = trackerWrapper
           .querySelector('.book-heading')
           .textContent.trim();
 
-        const getBookId = parseInt(libraryWrapper.getAttribute('id'));
+        const getBookId = Number(trackerWrapper.getAttribute('id'));
 
-        this.libraryState.deleteBook(getBookId);
+        this.trackerState.deleteBook(getBookId);
         this.renderBooks();
         UtilityModule.activityMsg(
-          `"${bookName}" book been successfully removed from library`
+          `"${bookName}" book been successfully removed from Tracker`
         );
       }
     });

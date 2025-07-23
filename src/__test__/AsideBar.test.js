@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import UtilityModule from '../js-components/UtilityModule';
-import AsideBar from '../js-components/AsideBar';
-import LibraryStore from '../js-components/LibraryStore';
+import UtilityModule from '../js-components/UtilityModule.js';
+import AsideBar from '../js-components/AsideBar.js';
+import TrackerStore from '../js-components/TrackerStore.js';
 import {
   asideDoneReading,
   asideYetToRead,
-} from '../js-components/data/asideBarElementsData';
+} from '../js-components/data/asideBarElementsData.js';
 
 let rootDiv,
   asideBar = null;
@@ -100,7 +100,7 @@ describe('AsideBar', () => {
       doneReadingBox.innerHTML = '<p>Old Content</p>';
       expect(doneReadingBox.innerHTML).toContain('Old Content');
 
-      LibraryStore.storedBooks = [
+      TrackerStore.storedBooks = [
         {
           bookId: 'book-1',
           bookName: 'Atomic Habits',
@@ -141,7 +141,7 @@ describe('AsideBar', () => {
     it('should not append anything if no books have haveRead as "Yes"', () => {
       asideBar.doneReading();
       const doneReadingBox = document.querySelector('.done-reading-box');
-      LibraryStore.storedBooks = [
+      TrackerStore.storedBooks = [
         {
           bookId: 'book-4',
           bookName: 'The Alchemist',
@@ -170,7 +170,7 @@ describe('AsideBar', () => {
       const yetToReadBox = document.querySelector('.yet-to-read-box');
       yetToReadBox.innerHTML = '<span>Old Content</span>';
 
-      LibraryStore.storedBooks = [
+      TrackerStore.storedBooks = [
         {
           bookId: 'book-7',
           bookName: 'Book A',
@@ -188,7 +188,7 @@ describe('AsideBar', () => {
     it('should append anchors for books with haveRead === "No"', () => {
       asideBar.yetToRead();
 
-      LibraryStore.storedBooks = [
+      TrackerStore.storedBooks = [
         {
           bookId: 'book-9',
           bookName: 'Read Later',
@@ -218,7 +218,7 @@ describe('AsideBar', () => {
     it('should not append anything if no books have haveRead === "No"', () => {
       asideBar.yetToRead();
 
-      LibraryStore.storedBooks = [
+      TrackerStore.storedBooks = [
         {
           bookId: 'book-11',
           bookName: 'Done Book',

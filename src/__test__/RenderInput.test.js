@@ -1,16 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import RenderInput from '../js-components/RenderInput';
-import LibraryState from '../js-components/LibraryState';
-import RenderLibrary from '../js-components/RenderLibrary';
-import UtilityModule from '../js-components/UtilityModule';
-import RenderUI from '../js-components/RenderUI';
-import AsideBar from '../js-components/AsideBar';
-import CreateInput from '../js-components/CreateInput';
+import RenderInput from '../js-components/RenderInput.js';
+import TrackerState from '../js-components/TrackerState.js';
+import RenderTracker from '../js-components/RenderTracker.js';
+import UtilityModule from '../js-components/UtilityModule.js';
+import RenderUI from '../js-components/RenderUI.js';
+import AsideBar from '../js-components/AsideBar.js';
+import CreateInput from '../js-components/CreateInput.js';
 
 let rootDiv,
   renderInput,
-  libraryState,
-  renderLibrary,
+  trackerState,
+  renderTracker,
   renderUI,
   asideBar,
   createInput = null;
@@ -19,11 +19,11 @@ beforeEach(() => {
   document.body.innerHTML = `<div id="root"></div>`;
   UtilityModule.rootDiv = document.querySelector('#root');
   rootDiv = UtilityModule.rootDiv;
-  libraryState = new LibraryState();
+  trackerState = new TrackerState();
   renderUI = new RenderUI();
   asideBar = new AsideBar();
-  renderLibrary = new RenderLibrary(libraryState, renderUI, asideBar);
-  renderInput = new RenderInput(libraryState, renderLibrary);
+  renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
+  renderInput = new RenderInput(trackerState, renderTracker);
   createInput = new CreateInput();
 });
 
@@ -33,12 +33,12 @@ describe('RenderInput', () => {
   });
 
   describe('constructor', () => {
-    it('should create an instance of libraryState', () => {
-      expect(renderInput.libraryState).toBeInstanceOf(LibraryState);
+    it('should create an instance of trackerState', () => {
+      expect(renderInput.trackerState).toBeInstanceOf(TrackerState);
     });
 
-    it('should create an instance of renderLibrary', () => {
-      expect(renderInput.renderLibrary).toBeInstanceOf(RenderLibrary);
+    it('should create an instance of renderTracker', () => {
+      expect(renderInput.renderTracker).toBeInstanceOf(RenderTracker);
     });
   });
 
@@ -52,10 +52,10 @@ describe('RenderInput', () => {
         .spyOn(UtilityModule, 'activityMsg')
         .mockImplementation(() => {});
       spyStoreBooks = vi
-        .spyOn(renderInput.libraryState, 'storeBooks')
+        .spyOn(renderInput.trackerState, 'storeBooks')
         .mockImplementation(() => {});
       spyRenderBooks = vi
-        .spyOn(renderInput.renderLibrary, 'renderBooks')
+        .spyOn(renderInput.renderTracker, 'renderBooks')
         .mockImplementation(() => {});
     });
 
@@ -119,8 +119,8 @@ describe('RenderInput', () => {
 
       expect(spyStoreBooks).toHaveBeenCalledWith(
         expect.any(Number),
-        '1984',
         'George Orwell',
+        '1984',
         '328',
         'Yes'
       );

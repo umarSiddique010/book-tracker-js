@@ -1,8 +1,11 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { type } = require('os');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   entry: {
     index: path.resolve(__dirname, './src/index.js'),
   },
@@ -10,9 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, './build'),
     filename: '[name].bundle.js',
   },
-
   mode: 'development',
-
   devServer: {
     static: {
       directory: path.resolve(__dirname, './build'),
@@ -23,14 +24,12 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/template.html'),
       favicon: path.resolve(__dirname, './src/asset/favicon.png'),
     }),
   ],
-
   module: {
     rules: [
       {

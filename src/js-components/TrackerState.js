@@ -1,7 +1,7 @@
 import AddBooks from './AddBooks.js';
-import LibraryStore from './LibraryStore.js';
+import TrackerStore from './TrackerStore.js';
 
-export default class LibraryState {
+export default class TrackerState {
   storeBooks(bookId, authorName, bookName, pageNumber, haveRead) {
     const newBook = new AddBooks(
       bookId,
@@ -10,25 +10,25 @@ export default class LibraryState {
       pageNumber,
       haveRead
     );
-    LibraryStore.storedBooks.push(newBook);
-    LibraryStore.saveBook();
+    TrackerStore.storedBooks.push(newBook);
+    TrackerStore.saveBook();
   }
 
   deleteBook(bookId) {
-    LibraryStore.storedBooks = LibraryStore.storedBooks.filter(
+    TrackerStore.storedBooks = TrackerStore.storedBooks.filter(
       (book) => book.bookId !== bookId
     );
-    LibraryStore.saveBook();
+    TrackerStore.saveBook();
   }
 
   editRead(haveRead, bookId) {
-    const authorIndex = LibraryStore.storedBooks.findIndex(
+    const authorIndex = TrackerStore.storedBooks.findIndex(
       (book) => book.bookId === bookId
     );
 
     if (authorIndex !== -1) {
-      LibraryStore.storedBooks[authorIndex].haveRead = haveRead;
-      LibraryStore.saveBook();
+      TrackerStore.storedBooks[authorIndex].haveRead = haveRead;
+      TrackerStore.saveBook();
     } else {
       alert('no book found');
     }

@@ -1,17 +1,17 @@
 import CreateInput from './js-components/CreateInput.js';
 import RenderUI from './js-components/RenderUI.js';
 import AsideBar from './js-components/AsideBar.js';
-import LibraryState from './js-components/LibraryState.js';
-import RenderLibrary from './js-components/RenderLibrary.js';
+import TrackerState from './js-components/TrackerState.js';
+import RenderTracker from './js-components/RenderTracker.js';
 import RenderInput from './js-components/RenderInput.js';
 import './style.css';
 
-const libraryState = new LibraryState();
+const trackerState = new TrackerState();
 const asideBar = new AsideBar();
 const renderUI = new RenderUI();
 const createInput = new CreateInput(renderUI);
-const renderLibrary = new RenderLibrary(libraryState, renderUI, asideBar);
-const renderInput = new RenderInput(libraryState, renderLibrary);
+const renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
+const renderInput = new RenderInput(trackerState, renderTracker);
 
 document.addEventListener('DOMContentLoaded', () => {
   // Directly inside root div
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderUI.bookCreateAndDeleteBtns();
   // Create and Delete all section
 
-  renderUI.createLibraryHandler();
-  renderUI.deleteAllLibraryHandle(renderLibrary);
+  renderUI.createTrackerHandler();
+  renderUI.deleteAllTrackerHandle(renderTracker);
 
   renderInput.initializeForm();
-  renderLibrary.renderBooks();
-  renderLibrary.attachEditAndDoneHandler();
-  renderLibrary.attachDeleteBookHandler();
+  renderTracker.renderBooks();
+  renderTracker.attachEditAndDoneHandler();
+  renderTracker.attachDeleteBookHandler();
 });

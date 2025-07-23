@@ -1,5 +1,5 @@
 import UtilityModule from './UtilityModule.js';
-import LibraryStore from './LibraryStore.js';
+import TrackerStore from './TrackerStore.js';
 import CreateIcon from '../asset/create.png';
 import DeleteAllIcon from '../asset/delete-folder.png';
 export default class RenderUI {
@@ -15,11 +15,11 @@ export default class RenderUI {
       'section',
       this.mainTag,
       null,
-      'book-curd-section'
+      'book-create-delete-section'
     );
   }
 
-  createLibraryHandler() {
+  createTrackerHandler() {
     document.addEventListener('click', (e) => {
       const createBtn = e.target.closest('.create-book');
       if (createBtn) {
@@ -30,17 +30,17 @@ export default class RenderUI {
     });
   }
 
-  deleteAllLibraryHandle(renderLibrary) {
+  deleteAllTrackerHandle(renderTracker) {
     document.addEventListener('click', (e) => {
       const deleteAllBtn = e.target.closest('.delete-all-books');
 
       if (deleteAllBtn) {
-        if (LibraryStore.storedBooks.length <= 0) {
+        if (TrackerStore.storedBooks.length <= 0) {
           UtilityModule.activityMsg('Your Book Tracker is already empty');
         } else {
-          LibraryStore.deleteAllBook();
-          LibraryStore.storedBooks = [];
-          renderLibrary.renderBooks();
+          TrackerStore.deleteAllBook();
+          TrackerStore.storedBooks = [];
+          renderTracker.renderBooks();
           UtilityModule.activityMsg('Your Book Tracker is now empty');
         }
       }
@@ -61,7 +61,7 @@ export default class RenderUI {
       'button',
       this.bookCreateAndDeleteSection,
       null,
-      'curd-btn-wrapper'
+      'create-read-btn-wrapper'
     );
 
     const deleteAllBtn = UtilityModule.createElement(

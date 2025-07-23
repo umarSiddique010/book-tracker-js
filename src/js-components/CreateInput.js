@@ -1,14 +1,14 @@
 import closeBtn from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
-import { fields, dropDowns } from './data/bookFormInputsData.js';
+import { bookInputFields, bookFormDropDowns } from './data/bookFormInputsData.js';
 
-export default class RenderInput {
+export default class CreateInput {
   renderBookForm() {
-    if (!Array.isArray(fields) || fields.length <= 0) {
+    if (!Array.isArray(bookInputFields) || bookInputFields.length <= 0) {
       throw new Error('fields data is missing or Invalid');
     }
 
-    if (!Array.isArray(dropDowns) || dropDowns.length <= 0) {
+    if (!Array.isArray(bookFormDropDowns) || bookFormDropDowns.length <= 0) {
       throw new Error('dropDowns data is missing or invalid');
     }
 
@@ -43,8 +43,8 @@ export default class RenderInput {
 
     closeBtnImg.src = closeBtn;
 
-    fields.forEach((field) => this.inputFields(field, inputForm));
-    dropDowns.forEach((dropDown) => this.dropDownFields(dropDown, inputForm));
+    bookInputFields.forEach((field) => this.inputFields(field, inputForm));
+    bookFormDropDowns.forEach((dropDown) => this.dropDownFields(dropDown, inputForm));
 
     this.inputSubmitBtn(inputForm);
   }
@@ -68,8 +68,8 @@ export default class RenderInput {
     submitBtn.id = 'submitBtn';
   }
 
-  inputFields(field, inputForm) {
-    const { label, id, placeholder, type } = field;
+  inputFields(bookInputField, inputForm) {
+    const { label, id, placeholder, type } = bookInputField;
 
     const fieldWrapper = UtilityModule.createElement(
       'div',
@@ -99,8 +99,8 @@ export default class RenderInput {
     fieldInput.placeholder = placeholder;
   }
 
-  dropDownFields(dropDown, inputForm) {
-    const { label, id, options } = dropDown;
+  dropDownFields(bookFormDropDown, inputForm) {
+    const { label, id, options } = bookFormDropDown;
 
     const optionWrapper = UtilityModule.createElement(
       'div',

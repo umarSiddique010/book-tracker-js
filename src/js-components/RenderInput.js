@@ -1,9 +1,9 @@
-import UtilityModule from './UtilityModule';
+import UtilityModule from './UtilityModule.js';
 
 export default class RenderInput {
-  constructor(libraryState, renderLibrary) {
-    this.libraryState = libraryState;
-    this.renderLibrary = renderLibrary;
+  constructor(trackerState, renderTracker) {
+    this.trackerState = trackerState;
+    this.renderTracker = renderTracker;
   }
 
   initializeForm() {
@@ -33,15 +33,15 @@ export default class RenderInput {
         return;
       }
 
-      this.libraryState.storeBooks(
+      this.trackerState.storeBooks(
         newBookId,
-        bookNameValue,
         authorNameValue,
+        bookNameValue,
         pageNumberValue,
         haveReadValue
       );
 
-      this.renderLibrary.renderBooks();
+      this.renderTracker.renderBooks();
 
       document.querySelector('.form-container').classList.add('hidden');
 

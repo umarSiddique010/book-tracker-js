@@ -1,7 +1,7 @@
 import hamburgerMenu from '../asset/hamburger-menu.svg';
 import closeHamburger from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
-import LibraryStore from './LibraryStore.js';
+import TrackerStore from './TrackerStore.js';
 import {
   asideDoneReading,
   asideYetToRead,
@@ -67,7 +67,7 @@ export default class AsideBar {
       doneReadingBox.innerHTML = '';
     }
 
-    LibraryStore.storedBooks.forEach(
+    TrackerStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
         if (haveRead === 'Yes') {
           const bookNameAnchor = UtilityModule.createElement(
@@ -89,7 +89,7 @@ export default class AsideBar {
 
     yetToReadBox.innerHTML = '';
 
-    LibraryStore.storedBooks.forEach(
+    TrackerStore.storedBooks.forEach(
       ({ bookId, bookName, authorName, pageNumber, haveRead }) => {
         if (haveRead === 'No') {
           const bookNameAnchor = UtilityModule.createElement(

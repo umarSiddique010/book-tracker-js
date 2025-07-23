@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import UtilityModule from '../js-components/UtilityModule.js';
 import RenderUI from '../js-components/RenderUI.js';
-import LibraryStore from '../js-components/LibraryStore.js';
+import TrackerStore from '../js-components/TrackerStore.js';
 
 let renderUI, rootDiv;
 
@@ -20,15 +20,15 @@ describe('RenderUI.js', () => {
       expect(main.tagName).toBe('MAIN');
     });
 
-    it('should create book-curd-section inside <main>', () => {
-      const section = rootDiv.querySelector('section.book-curd-section');
+    it('should create book-create-delete-section inside <main>', () => {
+      const section = rootDiv.querySelector('section.book-create-delete-section');
       expect(section).toBeTruthy();
     });
   });
 
-  describe('createLibraryHandler()', () => {
+  describe('createTrackerHandler()', () => {
     it('should reveal the form container when Create button is clicked', () => {
-      renderUI.createLibraryHandler();
+      renderUI.createTrackerHandler();
 
       const createBtn = document.createElement('button');
       createBtn.classList.add('create-book');
@@ -59,16 +59,16 @@ describe('RenderUI.js', () => {
     });
   });
 
-  describe('deleteAllLibraryHandle()', () => {
+  describe('deleteAllTrackerHandle()', () => {
     it('should delete books, clear store, call render and show success message', async () => {
       const activitySpy = vi.spyOn(UtilityModule, 'activityMsg');
       const renderMock = vi.fn();
       const deleteMock = vi.fn();
 
-      LibraryStore.storedBooks = [{ title: 'Book 1' }];
-      LibraryStore.deleteAllBook = deleteMock;
+      TrackerStore.storedBooks = [{ bookId: 1, bookName: 'Book 1' }];
+      TrackerStore.deleteAllBook = deleteMock;
 
-      renderUI.deleteAllLibraryHandle({ renderBooks: renderMock });
+      renderUI.deleteAllTrackerHandle({ renderBooks: renderMock });
 
       const deleteBtn = document.createElement('button');
       deleteBtn.classList.add('delete-all-books');
@@ -82,14 +82,14 @@ describe('RenderUI.js', () => {
       expect(activitySpy).toHaveBeenCalledWith(
         'Your Book Tracker is now empty'
       );
-      expect(LibraryStore.storedBooks).toEqual([]);
+      expect(TrackerStore.storedBooks).toEqual([]);
     });
 
     it('should show warning if no books are present in store', () => {
       const activitySpy = vi.spyOn(UtilityModule, 'activityMsg');
-      LibraryStore.storedBooks = [];
+      TrackerStore.storedBooks = [];
 
-      renderUI.deleteAllLibraryHandle({ renderBooks: vi.fn() });
+      renderUI.deleteAllTrackerHandle({ renderBooks: vi.fn() });
 
       const deleteBtn = document.createElement('button');
       deleteBtn.classList.add('delete-all-books');
@@ -107,7 +107,7 @@ describe('RenderUI.js', () => {
     it('should create wrapper, delete and create buttons with correct structure', () => {
       renderUI.bookCreateAndDeleteBtns();
 
-      const btnWrapper = rootDiv.querySelector('.curd-btn-wrapper');
+      const btnWrapper = rootDiv.querySelector('.create-read-btn-wrapper');
       expect(btnWrapper).toBeTruthy();
 
       const deleteBtn = btnWrapper.querySelector('button.delete-all-books');

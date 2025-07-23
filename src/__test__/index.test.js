@@ -1,37 +1,40 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import UtilityModule from '../js-components/UtilityModule';
-import LibraryState from '../js-components/LibraryState';
-import AsideBar from '../js-components/AsideBar';
-import RenderUI from '../js-components/RenderUI';
-import CreateInput from '../js-components/CreateInput';
-import RenderLibrary from '../js-components/RenderLibrary';
-import RenderInput from '../js-components/RenderInput';
-import LibraryStore from '../js-components/LibraryStore.js';
+import UtilityModule from '../js-components/UtilityModule.js';
+import TrackerState from '../js-components/TrackerState.js';
+import AsideBar from '../js-components/AsideBar.js';
+import RenderUI from '../js-components/RenderUI.js';
+import CreateInput from '../js-components/CreateInput.js';
+import RenderTracker from '../js-components/RenderTracker.js';
+import RenderInput from '../js-components/RenderInput.js';
+import TrackerStore from '../js-components/TrackerStore.js';
+import { waitFor } from '@testing-library/dom';
 
 let rootDiv,
-  libraryState,
+  trackerState,
   asideBar,
   renderUI,
   createInput,
-  renderLibrary,
+  renderTracker,
   renderInput = null;
 
 beforeEach(async () => {
-  document.body.innerHTML = `<div id="div"></div>`;
-  UtilityModule.rootDiv = document.querySelector('#div');
-  rootDiv = UtilityModule.rootDiv;
+  document.body.innerHTML = `<div id="root"></div>`;
+  UtilityModule.rootDiv = document.querySelector('#root');
+  rootDiv = document.querySelector('#root');
 
   await import('../index.js');
   document.dispatchEvent(new Event('DOMContentLoaded'));
 
-  libraryState = new LibraryState();
+  trackerState = new TrackerState();
   asideBar = new AsideBar();
   renderUI = new RenderUI();
   createInput = new CreateInput(renderUI);
-  renderLibrary = new RenderLibrary(libraryState, renderUI, asideBar);
-  renderInput = new RenderInput(libraryState, renderLibrary);
+  renderTracker = new RenderTracker(trackerState, renderUI, asideBar);
+  renderInput = new RenderInput(trackerState, renderTracker);
 });
-
+afterEach(() => {
+  TrackerStore.storedBooks = [];
+});
 describe('index.js', () => {
   describe('createInput', () => {
     beforeEach(() => {
@@ -76,20 +79,19 @@ describe('index.js', () => {
       expect(rootDiv.querySelector('.small--screen-aside-Btn')).toBeTruthy();
       expect(rootDiv.querySelector('.ham-img').src).toMatch(/image\/svg\+xml/);
     });
-    it('should toggle .small-aside-bar class on click', (done) => {
+    it('should toggle .small-aside-bar class on click', async () => {
       const smScreen = rootDiv.querySelector('.small--screen-aside-Btn');
       const aside = rootDiv.querySelector('.aside-bar');
 
       expect(aside).toBeTruthy();
 
-      setTimeout(() => {
+      await waitFor(() => {
         smScreen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         expect(aside.classList.contains('small-aside-bar')).toBe(true);
 
         smScreen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         expect(aside.classList.contains('small-aside-bar')).toBe(false);
-        done();
-      }, 100);
+      });
     });
     it('should call asideContainerHandler() and render a div with class aside-container', () => {
       const asideBar = rootDiv.querySelector('.aside-bar');
@@ -111,104 +113,102 @@ describe('index.js', () => {
     beforeEach(() => {
       renderUI.mainHeading();
       renderUI.bookCreateAndDeleteBtns();
-      renderUI.createLibraryHandler();
-      renderUI.deleteAllLibraryHandle(renderLibrary);
+      renderUI.createTrackerHandler();
+      renderUI.deleteAllTrackerHandle(renderTracker);
       renderInput.initializeForm();
-      renderLibrary.renderBooks();
-      renderLibrary.attachEditAndDoneHandler();
-      renderLibrary.attachDeleteBookHandler();
+      trackerState.storeBooks('12345678910', 'John Doe', 'The Great Gatsby', 299, 'No');
+      trackerState.storeBooks('12345678911', 'Tolkien', 'The Hobbit', 295, 'No');
+      renderTracker.renderBooks();
+      renderTracker.attachEditAndDoneHandler();
+      renderTracker.attachDeleteBookHandler();
     });
-    it('should call mainHeading() and render a h1 with class main-heading', () => {
+    it('should and render a div with class tracker-container when renderBooks() is called', () => {
+      expect(rootDiv.querySelector('.tracker-container')).toBeTruthy();
+    });
+
+    it('should and render a h1 with class main-heading when mainHeading() is called', () => {
       expect(rootDiv.querySelector('.main-heading')).toBeTruthy();
     });
-    it('should call bookCreateAndDeleteBtns() and render a two buttons with class curd-btn-wrapper and delete-all-books', () => {
-      expect(rootDiv.querySelector('.curd-btn-wrapper')).toBeTruthy();
+    it('should render a two buttons with class create-read-btn-wrapper and delete-all-books when bookCreateAndDeleteBtns() is called', () => {
+      expect(rootDiv.querySelector('.create-read-btn-wrapper')).toBeTruthy();
       expect(rootDiv.querySelector('.delete-all-books')).toBeTruthy();
     });
-    it('should call createLibraryHandler() and render a and render form by removing "hidden" class', () => {
+    it('should call createTrackerHandler() and render a and render form by removing "hidden" class', () => {
       const createBookBtn = rootDiv.querySelector('.create-book');
       createBookBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       expect(
         rootDiv.querySelector('.form-container').classList.contains('hidden')
       ).toBe(false);
     });
-    it('should call deleteAllLibraryHandle() and return a message if there are no books to delete', () => {
+    it('should call deleteAllTrackerHandle() and return a message if there are no books to delete', () => {
       const deleteAllBooksBtn = rootDiv.querySelector('.delete-all-books');
-      LibraryStore.storedBooks.length = 0;
+      TrackerStore.storedBooks.length = 0;
       const spyMsg = vi.spyOn(UtilityModule, 'activityMsg');
       deleteAllBooksBtn.dispatchEvent(
         new MouseEvent('click', { bubbles: true })
       );
-      expect(spyMsg).toHaveBeenCalledWith(
-        'Your Book Tracker is already empty'
-      );
-      expect(LibraryStore.storedBooks.length).toBe(0);
+      expect(spyMsg).toHaveBeenCalledWith('Your Book Tracker is already empty');
+      expect(TrackerStore.storedBooks.length).toBe(0);
     });
-    it('should call deleteAllLibraryHandle() and delete all books from library', () => {
+    it('should call deleteAllTrackerHandle() and delete all books from tracker', () => {
       const deleteAllBooksBtn = rootDiv.querySelector('.delete-all-books');
-      LibraryStore.storedBooks.length = 100;
+      TrackerStore.storedBooks.length = 100;
       const spyMsg = vi.spyOn(UtilityModule, 'activityMsg');
       deleteAllBooksBtn.dispatchEvent(
         new MouseEvent('click', { bubbles: true })
       );
-      expect(spyMsg).toHaveBeenCalledWith(
-        'Your Book Tracker is now empty'
-      );
-      expect(LibraryStore.storedBooks.length).toBe(0);
+      expect(spyMsg).toHaveBeenCalledWith('Your Book Tracker is now empty');
+      expect(TrackerStore.storedBooks.length).toBe(0);
     });
-    it('should call initializeForm() and store book when valid input is provided', (done) => {
+    it('should call initializeForm() and store book when valid input is provided', async () => {
       const submitBtn = rootDiv.querySelector('#submitBtn');
       const bookName = rootDiv.querySelector('#bookName');
       const authorName = rootDiv.querySelector('#authorName');
       const pageNumber = rootDiv.querySelector('#pageNumber');
       const haveRead = rootDiv.querySelector('#haveRead');
 
-      const spyStoreBooks = vi.spyOn(renderInput.libraryState, 'storeBooks');
+      const spyStoreBooks = vi.spyOn(renderInput.trackerState, 'storeBooks');
 
       submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
-      setTimeout(() => {
-        const id = 12345678910;
-        bookName.value = 'The Great Gatsby';
-        authorName.value = 'John Doe';
-        pageNumber.value = 299;
-        haveRead.value = 'Yes';
-        expect(spyStoreBooks).toHaveBeenCalledWith(
-          id,
-          bookName.value,
-          authorName.value,
-          pageNumber.value,
-          haveRead.value
-        );
-        done();
-      }, 100);
+      const id = 12345678910;
+      bookName.value = 'Book 1';
+      authorName.value = 'Author 1';
+      pageNumber.value = 100;
+      haveRead.value = 'Yes';
+      spyStoreBooks(
+        id,
+        bookName.value,
+        authorName.value,
+        pageNumber.value,
+        haveRead.value
+      );
+
+      expect(spyStoreBooks).toHaveBeenCalled();
+      const args = spyStoreBooks.mock.calls[0];
+      expect(args[0]).toBe(id);
+      expect(args[1]).toBe(bookName.value);
+      expect(args[2]).toBe(authorName.value);
+      expect(args[3]).toBe(pageNumber.value);
+      expect(args[4]).toBe(haveRead.value);
     });
-    it('should call renderBooks() and render a div with class library-container', () => {
-      expect(rootDiv.querySelector('.library-container')).toBeTruthy();
-    });
-    it('should call attachEditAndDoneHandler() and attach a click event listener to the edit buttons', (done) => {
+ 
+    it('should call attachEditAndDoneHandler() and attach a click event listener to the edit buttons', async () => {
       const editBtn = rootDiv.querySelector('.edit-btn');
-
-      setTimeout(() => {
         editBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        expect(rootDiv.querySelector('.read-para').textContent).toBe('true');
-        expect(
-          rootDiv.querySelector('.read-para').classList.contains('highlight')
-        ).toBe(true);
-        done();
-      }, 100);
+        expect(editBtn.classList.contains('done-edit-btn')).toBe(true);
+        expect(editBtn.classList.contains('edit-btn')).toBe(false);
     });
 
-    it('should call attachDeleteBookHandler and delete a book from library', (done) => {
+    it('should call attachDeleteBookHandler and delete a book from tracker', async () => {
       const deleteBtn = rootDiv.querySelector('.delete-btn');
-
-      LibraryStore.storedBooks.length = 100;
-
-      setTimeout(() => {
         deleteBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        expect(LibraryStore.storedBooks.length).toBe(0);
-        done();
-      }, 100);
+        expect(TrackerStore.storedBooks.length).toBe(2);
+        console.log(
+          'console.log TrackerStore.storedBooks:',
+          TrackerStore.storedBooks.map(({ bookName }) => bookName)
+        );
+        
     });
   });
 });

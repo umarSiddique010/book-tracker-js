@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import CreateInput from '../js-components/CreateInput';
-import UtilityModule from '../js-components/UtilityModule';
-import { fields, dropDowns } from '../js-components/data/bookFormInputsData';
+import CreateInput from '../js-components/CreateInput.js';
+import UtilityModule from '../js-components/UtilityModule.js';
+import { bookInputFields, bookFormDropDowns } from '../js-components/data/bookFormInputsData.js';
 
 let rootDiv,
   createInput = null;
@@ -15,25 +15,25 @@ beforeEach(() => {
 describe('CreateInput', () => {
   describe('renderBookForm()', () => {
     it('throws if fields data is invalid', () => {
-      const backup = [...fields];
-      fields.length = 0;
+      const backup = [...bookInputFields];
+      bookInputFields.length = 0;
 
       expect(() => createInput.renderBookForm()).toThrowError(
         'fields data is missing or Invalid'
       );
 
-      fields.push(...backup);
+      bookInputFields.push(...backup);
     });
 
     it('throws if dropDowns data is invalid', () => {
-      const backup = [...dropDowns];
-      dropDowns.length = 0;
+      const backup = [...bookFormDropDowns];
+      bookFormDropDowns.length = 0;
 
       expect(() => createInput.renderBookForm()).toThrowError(
         'dropDowns data is missing or invalid'
       );
 
-      dropDowns.push(...backup);
+      bookFormDropDowns.push(...backup);
     });
 
     it('creates .form-container inside #root with .hidden and .first-load-hidden-form', () => {
@@ -69,7 +69,7 @@ describe('CreateInput', () => {
     it('renders all input fields from fields[]', () => {
       createInput.renderBookForm();
 
-      fields.forEach(({ id, placeholder, type }) => {
+      bookInputFields.forEach(({ id, placeholder, type }) => {
         const input = document.getElementById(id);
         expect(input).not.toBeNull();
         expect(input.placeholder).toBe(placeholder);
@@ -80,7 +80,7 @@ describe('CreateInput', () => {
     it('renders all dropdowns from dropDowns[] with options', () => {
       createInput.renderBookForm();
 
-      dropDowns.forEach(({ id, options }) => {
+      bookFormDropDowns.forEach(({ id, options }) => {
         const select = document.getElementById(id);
         expect(select).not.toBeNull();
 
@@ -106,14 +106,14 @@ describe('CreateInput', () => {
     it('calls inputFields() for each field in renderBookForm()', () => {
       const spy = vi.spyOn(createInput, 'inputFields');
       createInput.renderBookForm();
-      expect(spy).toHaveBeenCalledTimes(fields.length);
+      expect(spy).toHaveBeenCalledTimes(bookInputFields.length);
       spy.mockRestore();
     });
 
     it('calls dropDownFields() for each dropdown in renderBookForm()', () => {
       const spy = vi.spyOn(createInput, 'dropDownFields');
       createInput.renderBookForm();
-      expect(spy).toHaveBeenCalledTimes(dropDowns.length);
+      expect(spy).toHaveBeenCalledTimes(bookFormDropDowns.length);
       spy.mockRestore();
     });
 

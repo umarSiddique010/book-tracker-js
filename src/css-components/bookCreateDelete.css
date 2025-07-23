@@ -1,4 +1,4 @@
-.book-curd-section {
+.book-create-delete-section {
   height: 340px;
   width: 100%;
   grid-row: 2/3;
@@ -8,7 +8,7 @@
   padding-bottom: 40px;
 }
 
-.curd-btn-wrapper {
+.create-read-btn-wrapper {
   height: 170px;
   width: 70%;
   background-color: var(--crudBarBg);
@@ -48,14 +48,14 @@
 }
 
 @media (max-width: 1024px) {
-  .book-curd-section {
+  .book-create-delete-section {
     justify-self: center;
     width: 95%;
     height: 240px;
     padding: 0;
   }
 
-  .curd-btn-wrapper {
+  .create-read-btn-wrapper {
     gap: 10px;
     height: 140px;
     margin-bottom: -60px;
