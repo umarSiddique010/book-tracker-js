@@ -1,4 +1,4 @@
-# <img height="20" src="./src/asset/favicon.png"> Resume Craft
+# <img height="45" src="./src/asset/favicon.ico" style="margin-bottom:-11px;"> Resume Craft
 
 <hr/>
 
