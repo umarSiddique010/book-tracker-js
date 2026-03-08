@@ -35,7 +35,7 @@ describe('BookStore', () => {
       expect(localStorage.getItem('savedLocalBooks')).not.toBeUndefined();
       expect(setItem).toHaveBeenCalledWith(
         'savedLocalBooks',
-        JSON.stringify(BookStore.storedBooks)
+        JSON.stringify(BookStore.storedBooks),
       );
       expect(BookStore.storedBooks.length).toBe(2);
     });

@@ -35,7 +35,7 @@ describe('InputField', () => {
   describe('constructor', () => {
     it('should create an instance of bookStateManagement', () => {
       expect(inputField.bookStateManagement).toBeInstanceOf(
-        BookStateManagement
+        BookStateManagement,
       );
     });
 
@@ -80,7 +80,7 @@ describe('InputField', () => {
       submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       expect(spyActivityMsg).toHaveBeenCalledWith(
-        'Book name, Author name or page number cannot be empty'
+        'Book name, Author name or page number cannot be empty',
       );
       expect(spyStoreBooks).not.toHaveBeenCalled();
     });
@@ -100,7 +100,7 @@ describe('InputField', () => {
       submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       expect(spyActivityMsg).toHaveBeenCalledWith(
-        "page number's value must be number"
+        "page number's value must be number",
       );
       expect(spyStoreBooks).not.toHaveBeenCalled();
     });
@@ -124,7 +124,7 @@ describe('InputField', () => {
         'George Orwell',
         '1984',
         '328',
-        'Yes'
+        'Yes',
       );
       expect(spyRenderBooks).toHaveBeenCalled();
       expect(spyActivityMsg).toHaveBeenCalledWith('Book added successfully');

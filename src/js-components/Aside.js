@@ -2,10 +2,7 @@ import hamburgerMenu from '../asset/hamburger-menu.svg';
 import closeHamburger from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
 import BookStore from './BookStore.js';
-import {
-  asideDoneReading,
-  asideYetToRead,
-} from './data/asideElementsData.js';
+import { asideDoneReading, asideYetToRead } from './data/asideElementsData.js';
 
 export default class Aside {
   constructor() {
@@ -13,14 +10,14 @@ export default class Aside {
       'aside',
       UtilityModule.rootDiv,
       null,
-      'aside-bar'
+      'aside-bar',
     );
 
     this.asideContainer = UtilityModule.createElement(
       'div',
       this.aside,
       null,
-      'aside-container'
+      'aside-container',
     );
   }
 
@@ -29,7 +26,7 @@ export default class Aside {
       'div',
       this.asideContainer,
       null,
-      'done-reading-container'
+      'done-reading-container',
     );
 
     asideDoneReading.forEach(({ element, text, classNames }) => {
@@ -37,7 +34,7 @@ export default class Aside {
         element,
         doneReadingContainer,
         text,
-        classNames
+        classNames,
       );
     });
   }
@@ -47,7 +44,7 @@ export default class Aside {
       'div',
       this.asideContainer,
       null,
-      'yet-to-read-container'
+      'yet-to-read-container',
     );
 
     asideYetToRead.forEach(({ element, text, classNames }) => {
@@ -55,7 +52,7 @@ export default class Aside {
         element,
         yetToReadContainer,
         text,
-        classNames
+        classNames,
       );
     });
   }
@@ -74,11 +71,11 @@ export default class Aside {
             'a',
             doneReadingBox,
             `${bookName}`,
-            'book-name-anchor'
+            'book-name-anchor',
           );
           bookNameAnchor.setAttribute('href', `#${bookId}`);
         }
-      }
+      },
     );
   }
 
@@ -96,11 +93,11 @@ export default class Aside {
             'a',
             yetToReadBox,
             `${bookName}`,
-            'book-name-anchor'
+            'book-name-anchor',
           );
           bookNameAnchor.setAttribute('href', `#${bookId}`);
         }
-      }
+      },
     );
   }
 
@@ -109,15 +106,17 @@ export default class Aside {
       'button',
       UtilityModule.rootDiv,
       null,
-      'small-screen-aside-Btn'
+      'small-screen-aside-Btn',
     );
     const hamImg = UtilityModule.createElement(
       'img',
       smallScreenAsideBtn,
       null,
-      'ham-img'
+      'ham-img',
     );
+    smallScreenAsideBtn.setAttribute('aria-label', 'Open menu');
     hamImg.src = hamburgerMenu;
+    hamImg.alt = 'Open Menu';
   }
 
   smallScreenAsideHandler() {
@@ -132,10 +131,14 @@ export default class Aside {
         aside.classList.remove('aside-bar');
         aside.classList.add('small-aside-bar');
         hamImg.src = closeHamburger;
+        hamImg.alt = 'Close Menu';
+        btn.setAttribute('aria-label', 'Close menu');
       } else {
         aside.classList.add('aside-bar');
         aside.classList.remove('small-aside-bar');
         hamImg.src = hamburgerMenu;
+        hamImg.alt = 'Open Menu';
+        btn.setAttribute('aria-label', 'Open menu');
       }
     });
   }

@@ -22,7 +22,7 @@ describe('RenderBasicUI.js', () => {
 
     it('should create book-create-delete-section inside <main>', () => {
       const section = rootDiv.querySelector(
-        'section.book-create-delete-section'
+        'section.book-create-delete-section',
       );
       expect(section).toBeTruthy();
     });
@@ -39,14 +39,14 @@ describe('RenderBasicUI.js', () => {
       const formContainer = document.querySelector('.form-container');
       expect(formContainer.classList.contains('hidden')).toBe(true);
       expect(formContainer.classList.contains('first-load-hidden-form')).toBe(
-        true
+        true,
       );
 
       createBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       expect(formContainer.classList.contains('hidden')).toBe(false);
       expect(formContainer.classList.contains('first-load-hidden-form')).toBe(
-        false
+        false,
       );
     });
   });
@@ -82,7 +82,7 @@ describe('RenderBasicUI.js', () => {
       expect(deleteMock).toHaveBeenCalled();
       expect(renderMock).toHaveBeenCalled();
       expect(activitySpy).toHaveBeenCalledWith(
-        'Your Book Tracker is now empty'
+        'Your Book Tracker is now empty',
       );
       expect(BookStore.storedBooks).toEqual([]);
     });
@@ -100,7 +100,7 @@ describe('RenderBasicUI.js', () => {
       deleteBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       expect(activitySpy).toHaveBeenCalledWith(
-        'Your Book Tracker is already empty'
+        'Your Book Tracker is already empty',
       );
     });
   });

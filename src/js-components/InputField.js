@@ -23,7 +23,7 @@ export default class InputField {
 
       if (bookNameValue === '' || authorNameValue === '') {
         UtilityModule.activityMsg(
-          'Book name, Author name or page number cannot be empty'
+          'Book name, Author name or page number cannot be empty',
         );
         return;
       }
@@ -38,7 +38,7 @@ export default class InputField {
         authorNameValue,
         bookNameValue,
         pageNumberValue,
-        haveReadValue
+        haveReadValue,
       );
 
       this.renderTracker.renderBooks();

@@ -22,7 +22,7 @@ describe('RenderForm', () => {
       bookInputFields.length = 0;
 
       expect(() => renderForm.renderBookForm()).toThrowError(
-        'fields data is missing or Invalid'
+        'fields data is missing or Invalid',
       );
 
       bookInputFields.push(...backup);
@@ -33,7 +33,7 @@ describe('RenderForm', () => {
       bookFormDropDowns.length = 0;
 
       expect(() => renderForm.renderBookForm()).toThrowError(
-        'dropDowns data is missing or invalid'
+        'dropDowns data is missing or invalid',
       );
 
       bookFormDropDowns.push(...backup);
@@ -89,7 +89,7 @@ describe('RenderForm', () => {
 
         options.forEach((opt) => {
           const option = Array.from(select.options).find(
-            (o) => o.value === opt
+            (o) => o.value === opt,
           );
           expect(option).not.toBeUndefined();
           expect(option.textContent).toBe(opt);
@@ -208,7 +208,7 @@ describe('RenderForm', () => {
       expect(select.getAttribute('name')).toBe('haveRead');
 
       const renderedOptions = Array.from(select.options).map(
-        (opt) => opt.value
+        (opt) => opt.value,
       );
       expect(renderedOptions).toEqual(['Yes', 'No']);
 

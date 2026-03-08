@@ -9,7 +9,7 @@ export default class BookStateManagement {
       authorName,
       bookName,
       pageNumber,
-      haveRead
+      haveRead,
     );
     BookStore.storedBooks.push(newBook);
     BookStore.saveBook();
@@ -17,14 +17,14 @@ export default class BookStateManagement {
 
   deleteBook(bookId) {
     BookStore.storedBooks = BookStore.storedBooks.filter(
-      (book) => book.bookId !== bookId
+      (book) => book.bookId !== bookId,
     );
     BookStore.saveBook();
   }
 
   editRead(haveRead, bookId) {
     const authorIndex = BookStore.storedBooks.findIndex(
-      (book) => book.bookId === bookId
+      (book) => book.bookId === bookId,
     );
 
     if (authorIndex !== -1) {

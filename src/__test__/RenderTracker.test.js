@@ -34,7 +34,7 @@ describe('RenderTracker.js', () => {
   describe('constructor', () => {
     it('should create a new instance of RenderTracker', () => {
       expect(renderTracker.bookStateManagement).toBeInstanceOf(
-        BookStateManagement
+        BookStateManagement,
       );
       expect(renderTracker.renderBasicUI).toBeInstanceOf(RenderBasicUI);
       expect(renderTracker.aside).toBeInstanceOf(Aside);
@@ -42,7 +42,7 @@ describe('RenderTracker.js', () => {
       const trackerSection = renderTracker.trackerSection;
       expect(trackerSection.classList.contains('tracker-section')).toBe(true);
       expect(renderTracker.renderBasicUI.mainTag.contains(trackerSection)).toBe(
-        true
+        true,
       );
     });
   });
@@ -54,14 +54,14 @@ describe('RenderTracker.js', () => {
         'John Doe',
         'The Great Gatsby',
         299,
-        'No'
+        'No',
       );
       bookStateManagement.storeBooks(
         12345678911,
         'Tolkien',
         'The Hobbit',
         295,
-        'No'
+        'No',
       );
       renderTracker.renderBooks();
     });
@@ -70,7 +70,7 @@ describe('RenderTracker.js', () => {
       renderTracker.trackerSection.innerHTML = '<p>Old Content</p>';
       renderTracker.renderBooks();
       expect(renderTracker.trackerSection.innerHTML).not.toContain(
-        'Old Content'
+        'Old Content',
       );
     });
 
@@ -88,17 +88,17 @@ describe('RenderTracker.js', () => {
       const second = wrappers[1];
 
       expect(first.querySelector('.book-heading').textContent).toContain(
-        'Book: The Great Gatsby'
+        'Book: The Great Gatsby',
       );
       expect(first.querySelector('.author-heading').textContent).toContain(
-        'Author: John Doe'
+        'Author: John Doe',
       );
 
       expect(second.querySelector('.book-heading').textContent).toContain(
-        'Book: The Hobbit'
+        'Book: The Hobbit',
       );
       expect(second.querySelector('.author-heading').textContent).toContain(
-        'Author: Tolkien'
+        'Author: Tolkien',
       );
     });
 
@@ -120,7 +120,7 @@ describe('RenderTracker.js', () => {
         'Author Name',
         'Book Title',
         '123',
-        'Yes'
+        'Yes',
       );
 
       const wrapper = container.querySelector('.tracker-wrapper');
@@ -128,13 +128,13 @@ describe('RenderTracker.js', () => {
       expect(wrapper.id).toBe('book-101');
 
       expect(wrapper.querySelector('.book-heading').textContent).toBe(
-        'Book: Book Title'
+        'Book: Book Title',
       );
       expect(wrapper.querySelector('.author-heading').textContent).toBe(
-        'Author: Author Name'
+        'Author: Author Name',
       );
       expect(wrapper.querySelector('.page-num-para').textContent).toBe(
-        'Pages: 123'
+        'Pages: 123',
       );
       expect(wrapper.querySelector('.read-para').textContent).toBe('Yes');
     });
@@ -147,7 +147,7 @@ describe('RenderTracker.js', () => {
         'Test Book',
         'Tester',
         '456',
-        'No'
+        'No',
       );
 
       const editBtn = container.querySelector('.edit-btn');
@@ -157,7 +157,7 @@ describe('RenderTracker.js', () => {
       expect(editIcon).toBeTruthy();
       expect(editIcon.tagName).toBe('IMG');
       expect(editIcon.alt).toBe('edit');
-      expect(editIcon.src).toContain('/src/asset/edit.png');
+      expect(editIcon.src).toContain('/src/asset/edit.webp');
     });
 
     it('should render delete button with correct icon and alt text', () => {
@@ -168,7 +168,7 @@ describe('RenderTracker.js', () => {
         'Sample Book',
         'Author X',
         '789',
-        'Yes'
+        'Yes',
       );
 
       const deleteBtn = container.querySelector('.delete-btn');
@@ -178,7 +178,7 @@ describe('RenderTracker.js', () => {
       expect(deleteIcon).toBeTruthy();
       expect(deleteIcon.tagName).toBe('IMG');
       expect(deleteIcon.alt).toBe('delete');
-      expect(deleteIcon.src).toContain('/src/asset/delete.png');
+      expect(deleteIcon.src).toContain('/src/asset/delete.webp');
     });
   });
   describe('capitalizeEditValue', () => {
@@ -196,7 +196,7 @@ describe('RenderTracker.js', () => {
         'div',
         rootDiv,
         null,
-        'tracker-wrapper'
+        'tracker-wrapper',
       );
       UtilityModule.createElement('h2', wrapper, 'Book: Dune', 'book-heading');
 
@@ -204,7 +204,7 @@ describe('RenderTracker.js', () => {
       renderTracker.successfulEditMsg('Yes', wrapper);
 
       expect(spy).toHaveBeenCalledWith(
-        `Edited to Yes. "Book: Dune" added in 'Done reading'`
+        `Edited to Yes. "Book: Dune" added in 'Done reading'`,
       );
     });
 
@@ -213,7 +213,7 @@ describe('RenderTracker.js', () => {
         'div',
         rootDiv,
         null,
-        'tracker-wrapper'
+        'tracker-wrapper',
       );
       UtilityModule.createElement('h2', wrapper, 'Book: Dune', 'book-heading');
 
@@ -221,7 +221,7 @@ describe('RenderTracker.js', () => {
       renderTracker.successfulEditMsg('No', wrapper);
 
       expect(spy).toHaveBeenCalledWith(
-        `Edited to No. "Book: Dune" added in 'Yet to read'`
+        `Edited to No. "Book: Dune" added in 'Yet to read'`,
       );
     });
   });
@@ -234,14 +234,14 @@ describe('RenderTracker.js', () => {
         'John Doe',
         'The Great Gatsby',
         299,
-        'No'
+        'No',
       );
       bookStateManagement.storeBooks(
         '12345678911',
         'Tolkien',
         'The Hobbit',
         295,
-        'No'
+        'No',
       );
       renderTracker.renderBooks();
       renderTracker.attachEditAndDoneHandler();
@@ -291,7 +291,7 @@ describe('RenderTracker.js', () => {
           expect(updatedReadPara.textContent).toContain('No');
           expect(updatedReadDropdown).toBeNull();
         },
-        { timeout: 1000 }
+        { timeout: 1000 },
       );
     });
   });
@@ -304,14 +304,14 @@ describe('RenderTracker.js', () => {
         'John Doe',
         'The Great Gatsby',
         299,
-        'No'
+        'No',
       );
       bookStateManagement.storeBooks(
         '12345678911',
         'Tolkien',
         'The Hobbit',
         295,
-        'No'
+        'No',
       );
 
       renderTracker.renderBooks();
@@ -335,10 +335,10 @@ describe('RenderTracker.js', () => {
           const msg = activityBox.querySelector('.msg-para');
           expect(msg).toBeTruthy();
           expect(msg.textContent).toContain(
-            `"${bookName}" book been successfully removed from Tracker`
+            `"${bookName}" book been successfully removed from Tracker`,
           );
         },
-        { timeout: 1000 }
+        { timeout: 1000 },
       );
     });
   });

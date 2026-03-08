@@ -10,7 +10,11 @@ const bookStateManagement = new BookStateManagement();
 const aside = new Aside();
 const renderBasicUI = new RenderBasicUI();
 const renderForm = new RenderForm(renderBasicUI);
-const renderTracker = new RenderTracker(bookStateManagement, renderBasicUI, aside);
+const renderTracker = new RenderTracker(
+  bookStateManagement,
+  renderBasicUI,
+  aside,
+);
 const inputField = new InputField(bookStateManagement, renderTracker);
 
 document.addEventListener('DOMContentLoaded', () => {

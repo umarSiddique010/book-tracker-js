@@ -29,7 +29,9 @@
   outline: none;
   border: none;
   color: var(--whiteColor);
-  font-family: 'Dosis', 'Caveat' sans-serif;
+  font-family:
+    'Dosis',
+    'Caveat' sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-size: large;
@@ -51,7 +53,7 @@ html {
   width: 100%;
   display: grid;
   grid-template-columns: 18% 82%;
-  background-image: url('./asset/main-bg.jpg');
+  background-image: url('./asset/main-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,8 +1,11 @@
 import closeBtn from '../asset/close-hamburger.svg';
 import UtilityModule from './UtilityModule.js';
-import { bookInputFields, bookFormDropDowns } from './data/inputAttributesData.js';
+import {
+  bookInputFields,
+  bookFormDropDowns,
+} from './data/inputAttributesData.js';
 
-export default class RenderForm{
+export default class RenderForm {
   renderBookForm() {
     if (!Array.isArray(bookInputFields) || bookInputFields.length <= 0) {
       throw new Error('fields data is missing or Invalid');
@@ -16,14 +19,14 @@ export default class RenderForm{
       'div',
       UtilityModule.rootDiv,
       null,
-      'form-container hidden first-load-hidden-form'
+      'form-container hidden first-load-hidden-form',
     );
 
     const inputForm = UtilityModule.createElement(
       'form',
       formContainer,
       null,
-      null
+      null,
     );
     inputForm.setAttribute('id', 'form');
 
@@ -31,20 +34,23 @@ export default class RenderForm{
       'button',
       inputForm,
       null,
-      'close-form-btn'
+      'close-form-btn',
     );
+    closeFormBtn.setAttribute('aria-label', 'Close form');
 
     const closeBtnImg = UtilityModule.createElement(
       'img',
       closeFormBtn,
       null,
-      'close-btn-img'
+      'close-btn-img',
     );
 
     closeBtnImg.src = closeBtn;
-
+    closeBtnImg.alt = 'Close form';
     bookInputFields.forEach((field) => this.inputFields(field, inputForm));
-    bookFormDropDowns.forEach((dropDown) => this.dropDownFields(dropDown, inputForm));
+    bookFormDropDowns.forEach((dropDown) =>
+      this.dropDownFields(dropDown, inputForm),
+    );
 
     this.inputSubmitBtn(inputForm);
   }
@@ -54,14 +60,14 @@ export default class RenderForm{
       'div',
       inputForm,
       null,
-      'create-btn-wrapper'
+      'create-btn-wrapper',
     );
 
     const submitBtn = UtilityModule.createElement(
       'button',
       btnWrapper,
       'Add book',
-      null
+      null,
     );
 
     submitBtn.setAttribute('type', 'submit');
@@ -75,14 +81,14 @@ export default class RenderForm{
       'div',
       inputForm,
       null,
-      'field-wrapper'
+      'field-wrapper',
     );
 
     const fieldLabel = UtilityModule.createElement(
       'label',
       fieldWrapper,
       label,
-      null
+      null,
     );
     fieldLabel.setAttribute('for', id);
 
@@ -92,7 +98,7 @@ export default class RenderForm{
       'input',
       fieldWrapper,
       null,
-      null
+      null,
     );
     fieldInput.type = type;
     fieldInput.id = id;
@@ -106,14 +112,14 @@ export default class RenderForm{
       'div',
       inputForm,
       null,
-      'dropdown-wrapper'
+      'dropdown-wrapper',
     );
 
     const optionLabel = UtilityModule.createElement(
       'label',
       optionWrapper,
       label,
-      null
+      null,
     );
 
     optionLabel.setAttribute('for', id);
@@ -124,7 +130,7 @@ export default class RenderForm{
       'select',
       optionWrapper,
       null,
-      null
+      null,
     );
     selectElement.setAttribute('name', id);
     selectElement.id = id;
@@ -134,7 +140,7 @@ export default class RenderForm{
         'option',
         selectElement,
         option,
-        null
+        null,
       );
       optionTag.setAttribute('value', option);
     });

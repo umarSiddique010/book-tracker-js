@@ -17,7 +17,7 @@ describe('UtilityModule.js', () => {
         'div',
         parent,
         'Hello',
-        'test-class'
+        'test-class',
       );
       expect(element).toBeInstanceOf(HTMLDivElement);
       expect(element.classList.contains('test-class')).toBe(true);

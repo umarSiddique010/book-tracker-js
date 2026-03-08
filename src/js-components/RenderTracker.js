@@ -1,8 +1,8 @@
 import BookStore from './BookStore.js';
 import UtilityModule from './UtilityModule.js';
-import DeleteIcon from '../asset/delete.png';
-import EditIcon from '../asset/edit.png';
-import DoneIcon from '../asset/tick.png';
+import DeleteIcon from '../asset/delete.webp';
+import EditIcon from '../asset/edit.webp';
+import DoneIcon from '../asset/tick.webp';
 
 export default class RenderTracker {
   constructor(bookStateManagement, renderBasicUI, aside) {
@@ -13,7 +13,7 @@ export default class RenderTracker {
       'section',
       this.renderBasicUI.mainTag,
       null,
-      'tracker-section'
+      'tracker-section',
     );
   }
 
@@ -26,7 +26,7 @@ export default class RenderTracker {
       'div',
       this.trackerSection,
       null,
-      'tracker-container'
+      'tracker-container',
     );
 
     BookStore.storedBooks.forEach(
@@ -37,9 +37,9 @@ export default class RenderTracker {
           authorName,
           bookName,
           pageNumber,
-          haveRead
+          haveRead,
         );
-      }
+      },
     );
 
     this.aside.appendDoneReading();
@@ -52,13 +52,13 @@ export default class RenderTracker {
     authorName,
     bookName,
     pageNumber,
-    haveRead
+    haveRead,
   ) {
     const trackerWrapper = UtilityModule.createElement(
       'div',
       trackerContainer,
       null,
-      'tracker-wrapper'
+      'tracker-wrapper',
     );
 
     trackerWrapper.setAttribute('id', `${bookId}`);
@@ -67,28 +67,28 @@ export default class RenderTracker {
       'h2',
       trackerWrapper,
       `Book: ${bookName}`,
-      'book-heading'
+      'book-heading',
     );
 
     UtilityModule.createElement(
       'h3',
       trackerWrapper,
       `Author: ${authorName}`,
-      'author-heading'
+      'author-heading',
     );
 
     UtilityModule.createElement(
       'p',
       trackerWrapper,
       `Pages: ${pageNumber}`,
-      'page-num-para'
+      'page-num-para',
     );
 
     const readPara = UtilityModule.createElement(
       'p',
       trackerWrapper,
       null,
-      'read-para-box'
+      'read-para-box',
     );
 
     readPara.innerHTML = `<span><span>Read: </span><span class="read-para">${haveRead}</span></span>`;
@@ -97,14 +97,15 @@ export default class RenderTracker {
       'button',
       trackerWrapper,
       null,
-      'edit-btn'
+      'edit-btn',
     );
+    editBtn.setAttribute('aria-label', 'Edit book');
 
     const editIcon = UtilityModule.createElement(
       'img',
       editBtn,
       null,
-      'edit-icon'
+      'edit-icon',
     );
 
     editIcon.src = EditIcon;
@@ -114,14 +115,15 @@ export default class RenderTracker {
       'button',
       trackerWrapper,
       null,
-      'delete-btn'
+      'delete-btn',
     );
+    deleteBtn.setAttribute('aria-label', 'Delete book');
 
     const deleteIcon = UtilityModule.createElement(
       'img',
       deleteBtn,
       null,
-      'delete-icon'
+      'delete-icon',
     );
 
     deleteIcon.src = DeleteIcon;
@@ -176,7 +178,6 @@ export default class RenderTracker {
         const getBookId = Number(trackerWrapper.getAttribute('id'));
         const readDropdown = trackerWrapper.querySelector('.read-dropdown');
         const readPara = trackerWrapper.querySelector('.read-para');
-        
 
         if (!readDropdown) return;
 
@@ -210,7 +211,7 @@ export default class RenderTracker {
         this.bookStateManagement.deleteBook(getBookId);
         this.renderBooks();
         UtilityModule.activityMsg(
-          `"${bookName}" book been successfully removed from Tracker`
+          `"${bookName}" book been successfully removed from Tracker`,
         );
       }
     });

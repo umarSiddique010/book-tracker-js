@@ -28,7 +28,7 @@ describe('Aside', () => {
       expect(aside.asideContainer).toBeDefined();
       expect(aside.asideContainer).toBeInstanceOf(HTMLElement);
       expect(aside.asideContainer.classList.contains('aside-container')).toBe(
-        true
+        true,
       );
     });
   });
@@ -71,7 +71,7 @@ describe('Aside', () => {
           (el) =>
             el.tagName.toLowerCase() === element &&
             (text ? el.textContent === text : true) &&
-            classNames.split(' ').every((cls) => el.classList.contains(cls))
+            classNames.split(' ').every((cls) => el.classList.contains(cls)),
         );
 
         expect(matchingElements.length).toBeGreaterThan(0);
@@ -208,7 +208,7 @@ describe('Aside', () => {
       aside.appendYetToRead();
 
       const anchors = document.querySelectorAll(
-        '.yet-to-read-box a.book-name-anchor'
+        '.yet-to-read-box a.book-name-anchor',
       );
       expect(anchors.length).toBe(1);
       expect(anchors[0].textContent).toBe('Read Later');
@@ -231,7 +231,7 @@ describe('Aside', () => {
       aside.appendYetToRead();
 
       const anchors = document.querySelectorAll(
-        '.yet-to-read-box a.book-name-anchor'
+        '.yet-to-read-box a.book-name-anchor',
       );
       expect(anchors.length).toBe(0);
     });
@@ -313,7 +313,7 @@ describe('Aside', () => {
       const asideEl = document.querySelector('.aside-bar');
       const hamImg = document.querySelector('.ham-img');
 
-      hamImg.src = 'initial.png';
+      hamImg.src = 'initial.webp';
 
       aside.asideContainerHandler();
 

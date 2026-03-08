@@ -1,21 +1,21 @@
 import UtilityModule from './UtilityModule.js';
 import BookStore from './BookStore.js';
-import CreateIcon from '../asset/create.png';
-import DeleteAllIcon from '../asset/delete-folder.png';
+import CreateIcon from '../asset/create.webp';
+import DeleteAllIcon from '../asset/delete-folder.webp';
 export default class RenderBasicUI {
   constructor() {
     this.mainTag = UtilityModule.createElement(
       'main',
       UtilityModule.rootDiv,
       null,
-      null
+      null,
     );
 
     this.bookCreateAndDeleteSection = UtilityModule.createElement(
       'section',
       this.mainTag,
       null,
-      'book-create-delete-section'
+      'book-create-delete-section',
     );
   }
 
@@ -52,30 +52,31 @@ export default class RenderBasicUI {
       'h1',
       this.mainTag,
       'Track Your Books & Reading Progress',
-      'main-heading'
+      'main-heading',
     );
   }
 
   bookCreateAndDeleteBtns() {
     const btnWrapper = UtilityModule.createElement(
-      'button',
+      'div',
       this.bookCreateAndDeleteSection,
       null,
-      'create-read-btn-wrapper'
+      'create-read-btn-wrapper',
     );
 
     const deleteAllBtn = UtilityModule.createElement(
       'button',
       btnWrapper,
       null,
-      'delete-all-books'
+      'delete-all-books',
     );
+    deleteAllBtn.setAttribute('aria-label', 'Delete all books');
 
     const deleteAllIcon = UtilityModule.createElement(
       'img',
       deleteAllBtn,
       null,
-      'delete-all-icon'
+      'delete-all-icon',
     );
     deleteAllIcon.src = DeleteAllIcon;
     deleteAllIcon.alt = 'delete all';
@@ -84,13 +85,15 @@ export default class RenderBasicUI {
       'button',
       btnWrapper,
       null,
-      'create-book'
+      'create-book',
     );
+    createBtn.setAttribute('aria-label', 'Create a new book');
+
     const createIcon = UtilityModule.createElement(
       'img',
       createBtn,
       null,
-      'create-icon'
+      'create-icon',
     );
     createIcon.src = CreateIcon;
     createIcon.alt = 'create';

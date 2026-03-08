@@ -121,14 +121,14 @@ describe('index.js', () => {
         'John Doe',
         'The Great Gatsby',
         299,
-        'No'
+        'No',
       );
       bookStateManagement.storeBooks(
         '12345678911',
         'Tolkien',
         'The Hobbit',
         295,
-        'No'
+        'No',
       );
       renderTracker.renderBooks();
       renderTracker.attachEditAndDoneHandler();
@@ -149,7 +149,7 @@ describe('index.js', () => {
       const createBookBtn = rootDiv.querySelector('.create-book');
       createBookBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       expect(
-        rootDiv.querySelector('.form-container').classList.contains('hidden')
+        rootDiv.querySelector('.form-container').classList.contains('hidden'),
       ).toBe(false);
     });
     it('should call deleteAllTrackerHandle() and return a message if there are no books to delete', () => {
@@ -157,7 +157,7 @@ describe('index.js', () => {
       BookStore.storedBooks.length = 0;
       const spyMsg = vi.spyOn(UtilityModule, 'activityMsg');
       deleteAllBooksBtn.dispatchEvent(
-        new MouseEvent('click', { bubbles: true })
+        new MouseEvent('click', { bubbles: true }),
       );
       expect(spyMsg).toHaveBeenCalledWith('Your Book Tracker is already empty');
       expect(BookStore.storedBooks.length).toBe(0);
@@ -167,7 +167,7 @@ describe('index.js', () => {
       BookStore.storedBooks.length = 100;
       const spyMsg = vi.spyOn(UtilityModule, 'activityMsg');
       deleteAllBooksBtn.dispatchEvent(
-        new MouseEvent('click', { bubbles: true })
+        new MouseEvent('click', { bubbles: true }),
       );
       expect(spyMsg).toHaveBeenCalledWith('Your Book Tracker is now empty');
       expect(BookStore.storedBooks.length).toBe(0);
@@ -181,7 +181,7 @@ describe('index.js', () => {
 
       const spyStoreBooks = vi.spyOn(
         inputField.bookStateManagement,
-        'storeBooks'
+        'storeBooks',
       );
 
       submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -196,7 +196,7 @@ describe('index.js', () => {
         bookName.value,
         authorName.value,
         pageNumber.value,
-        haveRead.value
+        haveRead.value,
       );
 
       expect(spyStoreBooks).toHaveBeenCalled();
@@ -221,7 +221,7 @@ describe('index.js', () => {
       expect(BookStore.storedBooks.length).toBe(2);
       console.log(
         'console.log BookStore.storedBooks:',
-        BookStore.storedBooks.map(({ bookName }) => bookName)
+        BookStore.storedBooks.map(({ bookName }) => bookName),
       );
     });
   });

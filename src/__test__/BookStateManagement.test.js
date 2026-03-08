@@ -29,7 +29,7 @@ describe('BookStateManagement.js', () => {
         bookData.authorName,
         bookData.bookName,
         bookData.pageNumber,
-        bookData.haveRead
+        bookData.haveRead,
       );
 
       expect(BookStore.storedBooks).toHaveLength(1);

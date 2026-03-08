@@ -144,11 +144,13 @@ npm test
 # Run with coverage
 npm run test:coverage
 ```
+
 ---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
+
 1.  Fork the repository.
 2.  Create a feature branch (`git checkout -b feature/AmazingFeature`).
 3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
