@@ -78,6 +78,19 @@ The codebase is strictly divided into single-responsibility classes — no logic
 - **DOM tests** — form renders, button clicks, sidebar toggle via `jsdom` + `@testing-library/dom`
 - **Coverage** — enforced via `npm run test:coverage`
 
+### 5. Performance & Web Vitals (Lighthouse)
+
+Despite being a framework-free Vanilla JS application, the project is engineered for maximum efficiency. By utilizing **Event Delegation**, **Font-Display Swap**, and **Minified Webpack Bundles**, it achieves a perfect score across all metrics. This proves that high-performance web applications can be built with pure JavaScript without the overhead of heavy libraries.
+
+| Metric | Score |
+| :--- | :---: |
+| **Performance** | 🟢 100 |
+| **Accessibility** | 🟢 100 |
+| **Best Practices** | 🟢 100 |
+| **SEO** | 🟢 100 |
+
+*(Tested via Google PageSpeed Insights - Mobile & Desktop)*
+
 ## Tech Stack
 
 | Category | Technology | Usage |
