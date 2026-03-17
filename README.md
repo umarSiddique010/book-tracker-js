@@ -80,16 +80,16 @@ The codebase is strictly divided into single-responsibility classes — no logic
 
 ### 5. Performance & Web Vitals (Lighthouse)
 
-Despite being a framework-free Vanilla JS application, the project is engineered for maximum efficiency. By utilizing **Event Delegation**, **Font-Display Swap**, and **Minified Webpack Bundles**, it achieves a perfect score across all metrics. This proves that high-performance web applications can be built with pure JavaScript without the overhead of heavy libraries.
+The application is designed for strong runtime performance through a framework-free Vanilla JavaScript architecture. Using modular OOP, event delegation, and Webpack asset optimization, it delivers fast rendering, minimal layout shift, and low main-thread overhead.
 
-| Metric | Score |
-| :--- | :---: |
-| **Performance** | 🟢 100 |
-| **Accessibility** | 🟢 100 |
-| **Best Practices** | 🟢 100 |
-| **SEO** | 🟢 100 |
+| Metric | Mobile (Slow 4G) | Desktop |
+| :--- | :---: | :---: |
+| **Performance** | 🟠 80 | 🟢 98 |
+| **Accessibility** | 🟢 100 | 🟢 100 |
+| **Best Practices** | 🟢 100 | 🟢 100 |
+| **SEO** | 🟢 100 | 🟢 100 |
 
-*(Tested via Google PageSpeed Insights - Mobile & Desktop)*
+> **Note:** Lighthouse scores reflect optimized asset delivery, efficient DOM updates, and stable rendering with minimal layout shift.
 
 ## Tech Stack
 
