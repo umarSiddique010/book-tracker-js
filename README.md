@@ -84,10 +84,10 @@ The application is designed for strong runtime performance through a framework-f
 
 | Metric | Mobile (Slow 4G) | Desktop |
 | :--- | :---: | :---: |
-| **Performance** | 🟠 80 | 🟢 98 |
-| **Accessibility** | 🟢 100 | 🟢 100 |
-| **Best Practices** | 🟢 100 | 🟢 100 |
-| **SEO** | 🟢 100 | 🟢 100 |
+| **Performance** | 80 | 98 |
+| **Accessibility** | 100 | 100 |
+| **Best Practices** | 100 | 100 |
+| **SEO** | 100 | 100 |
 
 > **Note:** Lighthouse scores reflect optimized asset delivery, efficient DOM updates, and stable rendering with minimal layout shift.
 
