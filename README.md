@@ -78,7 +78,6 @@ The codebase is strictly divided into single-responsibility classes — no logic
 - **DOM tests** — form renders, button clicks, sidebar toggle via `jsdom` + `@testing-library/dom`
 - **Coverage** — enforced via `npm run test:coverage`
 
-
 ## Tech Stack
 
 | Category | Technology | Usage |
