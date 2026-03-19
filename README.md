@@ -78,18 +78,6 @@ The codebase is strictly divided into single-responsibility classes — no logic
 - **DOM tests** — form renders, button clicks, sidebar toggle via `jsdom` + `@testing-library/dom`
 - **Coverage** — enforced via `npm run test:coverage`
 
-### 5. Performance & Web Vitals (Lighthouse)
-
-The application is designed for strong runtime performance through a framework-free Vanilla JavaScript architecture. Using modular OOP, event delegation, and Webpack asset optimization, it delivers fast rendering, minimal layout shift, and low main-thread overhead.
-
-| Metric | Mobile (Slow 4G) | Desktop |
-| :--- | :---: | :---: |
-| **Performance** | 80 | 98 |
-| **Accessibility** | 100 | 100 |
-| **Best Practices** | 100 | 100 |
-| **SEO** | 100 | 100 |
-
-> **Note:** Lighthouse scores reflect optimized asset delivery, efficient DOM updates, and stable rendering with minimal layout shift.
 
 ## Tech Stack
 
